@@ -1,8 +1,8 @@
-import "./ChatHistory.css";
+import "./DMHistory.css";
 
 import Message from "../Message/Message";
 
-function ChatHistory({messages, sender}) {
+function DMHeader({messages, sender}) {
     //console.log(messages);
     function getType(i) {
         if(i.sender == sender) {
@@ -14,9 +14,9 @@ function ChatHistory({messages, sender}) {
         }
     }
     return (
-        <div>
+        <div className="dm-history">
             {messages.map(i => <Message type={getType(i)} content={i.content} timestamp={i.timestamp}/>)}
         </div>
     );
 }
-export default ChatHistory;
+export default DMHeader;

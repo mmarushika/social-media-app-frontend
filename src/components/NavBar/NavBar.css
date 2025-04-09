@@ -3,7 +3,7 @@
     float: left;
     width: 100px;
     height: 100vh;
-    background-color: white;
+    border-right: solid gray;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;

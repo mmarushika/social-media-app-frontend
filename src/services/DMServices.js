@@ -1,5 +1,5 @@
 
-export async function getData() {
+export async function getMessageHistory() {
     const res = await fetch("http://localhost:8000/messages", {
         method: 'GET',
         headers: {
@@ -18,7 +18,7 @@ export async function getData() {
        return data;*/
 }
 
-export async function addData(data) {
+export async function addMessage(data) {
     console.log(data);
     const res = await fetch("http://localhost:8000/send", {
         method: 'POST',
@@ -28,4 +28,6 @@ export async function addData(data) {
         body: JSON.stringify(data)
     });
 }
+
+
 

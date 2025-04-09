@@ -1,37 +1,19 @@
-.unclicked-post{
+.unclicked-post {
     width: 250px;
     height: 350px;
-    border-radius: 15px;
-    border: solid, gray ;
+    border-radius: 10px;
     text-align: center;
-    margin: 10px;
+    margin: 2px;
 }
 
-.clicked-post {
-    display: block;
-    width: 100vw;
-    height: 100vh;
-    z-index: 100;
+.unclicked-post-image {
+    border-radius: 10px;
+    width: 250px;
+    height: 350px;
+    object-fit: cover;
 }
+
 .image-wrapper {
     width: auto;
     height: auto;
 }
-
-.clicked-post-image {
-    width: 700px;
-    object-fit: contain;
-    float: left;
- }
-
-
-.unclicked-post-image {
-    width: 250px;
-    height: 350px;
-    object-fit: cover;
- }
-
- .comment-section {
-    float: right;
-    height: 100%;
- }

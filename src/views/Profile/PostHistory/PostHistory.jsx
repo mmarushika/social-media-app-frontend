@@ -1,7 +1,7 @@
 import "./PostHistory.css";
 import Post from "../Post/Post";
 
-function PostHistory({post, handlePostClick}) {
+function PostHistory({posts, handlePostClick}) {
     return (
         <div className="post-history">
             {posts.map(i => <Post post={i} onClick={handlePostClick} />)}
@@ -9,4 +9,4 @@ function PostHistory({post, handlePostClick}) {
     )
 }
 
-export default PostHistory();
+export default PostHistory;

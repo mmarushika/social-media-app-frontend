@@ -1,15 +1,17 @@
-import ChatHeader from "./ChatHeader/ChatHeader";
-import ChatHistory from "./ChatHistory/ChatHistory";
+import "./DMWindow.css";
+
+import DMHeader from "./DMHeader/DMHeader";
+import DMHistory from "./DMHistory/DMHistory";
 import MessageBar from "./MessageBar/MessageBar";
 
 import {useState, useEffect} from 'react';
-import {addData, getData} from '../../services/ChatServices';
+import {addMessage, getMessageHistory} from '../../services/DMServices';
   
-function ChatWindow({sender, receiver}) {
+function DMWindow({sender, receiver}) {
   const [messages, setMessages] = useState([]);
 
   const fetchMessages = () => {
-    getData()
+    getMessageHistory()
       .then(data => {
         setMessages(data)});
   }
@@ -23,15 +25,15 @@ function ChatWindow({sender, receiver}) {
       timestamp : JSON.stringify(new Date),
     }
     console.log(message);
-    await addData(message);
+    await addMessage(message);
   }
     return (
-        <div className="chat-window">
-            <ChatHeader name={receiver} />
-            <ChatHistory messages={messages} sender={sender}/>
+        <div className="dm-window">
+            <DMHeader name={receiver} />
+            <DMHistory messages={messages} sender={sender}/>
             <MessageBar onClick={handleSend}/>
         </div>
     )
 }
 
-export default ChatWindow;
+export default DMWindow;

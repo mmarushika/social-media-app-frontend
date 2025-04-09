@@ -1,0 +1,7 @@
+.post-history {
+    width: 90%;
+    height: 90%;
+    overflow: scroll;
+    display: flex;
+    flex-wrap: wrap;
+}

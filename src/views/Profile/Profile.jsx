@@ -25,18 +25,29 @@ function Profile() {
             setClickedPost(null);
         }
     }
-    if(clickedPost === null) {
-        return (
-            <div>
-                <input onChange={setImage} type="file" accept=".jpg, .jpeg, .png"></input>
-                <button onClick={makePost}>Post</button>
-                <PostHistory posts={posts} handlePostClick={handlePostClick}/>
-            </div>
-        )
-    } else {
-        <div>
-            <OpenedPost />
-        </div>
+
+    function handleBackgroundClick(event) {
+        if(event.target.className == "transparent-background") {
+            setClickedPost(null);
+        }
     }
+
+    function getClickedPost() {
+        if(clickedPost !== null) {
+            return (
+                <div className="transparent-background" onClick={handleBackgroundClick}>
+                    <OpenedPost post={clickedPost}/>
+                </div>
+            )
+        }
+    }
+    return (
+        <div>
+            <input onChange={setImage} type="file" accept=".jpg, .jpeg, .png"></input>
+            <button onClick={makePost}>Post</button>
+            <PostHistory posts={posts} handlePostClick={handlePostClick}/>
+            { getClickedPost() }
+        </div>
+    );
 }
 export default Profile;

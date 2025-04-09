@@ -1,7 +1,7 @@
 import "./Post.css";
 import {useState} from "react";
 
-function Post({post}) {
+function Post({post, onClick}) {
     const [isClicked, setClickStatus] = useState(false);
     if(isClicked == false) {
         return (

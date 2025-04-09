@@ -1,6 +1,6 @@
-function Profile(prop) {
+function DMHeader(prop) {
     return (
         <h1>{prop.name}</h1>
     );
 }
-export default Profile;
+export default DMHeader;
