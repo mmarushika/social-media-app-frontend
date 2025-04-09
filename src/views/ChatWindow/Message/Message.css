@@ -1,0 +1,29 @@
+.sent {
+    float: right;
+    background-color: gray;
+}
+.received {
+    float: left;
+}
+
+.message {
+    padding: 10px;
+    border-radius: 25px;
+    border: solid white;
+    display: block;
+    width: 70%;
+    margin: 10px;
+}
+
+.message-content {
+    text-align: left;
+    width: 90%;
+    font-size: 1em;
+    float: left;
+}
+.message-timestamp {
+    width: 20%;
+    text-align: right;
+    font-size: 0.5em;
+    float: right;
+}

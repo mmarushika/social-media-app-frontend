@@ -1,0 +1,23 @@
+.login-field {
+    min-width: 300px;
+    min-height: 400px;
+    width: 30%;
+    height: 60%;
+    background-color: gray;
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: middle;
+}
+
+.login-field-wrapper {
+    margin-top: 50%;
+    line-break: 4px;
+}
+
+.login-button {
+    width: auto;
+    height: auto;
+    border-radius: 10px;
+}

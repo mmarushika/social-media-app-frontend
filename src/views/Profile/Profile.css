@@ -1,0 +1,4 @@
+.post-history {
+    display: flex;
+    flex-wrap: wrap;
+}

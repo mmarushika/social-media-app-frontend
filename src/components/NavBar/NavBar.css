@@ -1,0 +1,16 @@
+.nav-bar {
+    margin: 0px;
+    float: left;
+    width: 100px;
+    height: 100vh;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.profile, .home {
+   width: 60%;
+   height: auto;
+   margin: 20px;
+}
