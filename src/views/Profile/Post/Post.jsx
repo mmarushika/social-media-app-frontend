@@ -5,7 +5,7 @@ function Post({post}) {
     const [isClicked, setClickStatus] = useState(false);
     if(isClicked == false) {
         return (
-            <div onClick={() => setClickStatus(!isClicked)} className="unclicked-post">
+            <div onClick={() => onClick(post)} className="unclicked-post">
                 <div className="image-wrapper">
                     <img className="unclicked-post-image" src = {post.imageUrl}></img>
                 </div>
@@ -13,7 +13,7 @@ function Post({post}) {
         );
     } else {
         return (
-            <div onClick={() => setClickStatus(!isClicked)} lassName="clicked-post">
+            <div onClick={() => onClick(post)} className="clicked-post">
                 <div className="image-wrapper">
                     <img className="clicked-post-image" src = {post.imageUrl}></img>
                     <div className="comment-section">

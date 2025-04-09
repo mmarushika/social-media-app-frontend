@@ -1,10 +1,12 @@
 import "./Profile.css";
 import {useState} from "react";
-import Post from "./Post/Post";
+import PostHistory from "./PostHistory/PostHistory";
+import OpenedPost from "./OpenedPost/OpenedPost";
 
 function Profile() {
     const [posts, setPosts] = useState([]);
     const [currentPost, setPost] = useState({content:"", imageUrl:""});
+    const [clickedPost, setClickedPost] = useState(null);
 
     function setImage(event) {
         let image = event.target.files[0];
@@ -15,14 +17,26 @@ function Profile() {
         setPosts(prevPosts => [...prevPosts, currentPost]);
         console.log(posts);
     }
-    return (
-        <div>
-            <input onChange={setImage} type="file" accept=".jpg, .jpeg, .png"></input>
-            <button onClick={makePost}>Post</button>
-            <div className="post-history"> 
-                { posts.map(i => <Post post={i}/>) }
+
+    function handlePostClick(post) {
+        if(clickedPost === null) {
+            setClickedPost(post);
+        } else {
+            setClickedPost(null);
+        }
+    }
+    if(clickedPost === null) {
+        return (
+            <div>
+                <input onChange={setImage} type="file" accept=".jpg, .jpeg, .png"></input>
+                <button onClick={makePost}>Post</button>
+                <PostHistory posts={posts} handlePostClick={handlePostClick}/>
             </div>
+        )
+    } else {
+        <div>
+            <OpenedPost />
         </div>
-    )
+    }
 }
 export default Profile;

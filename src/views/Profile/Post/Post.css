@@ -1,6 +1,6 @@
-.unclicked-post {
-    width: 400px;
-    height: 500px;
+.unclicked-post{
+    width: 250px;
+    height: 350px;
     border-radius: 15px;
     border: solid, gray ;
     text-align: center;
@@ -8,9 +8,10 @@
 }
 
 .clicked-post {
-    width: 100%;
-    height: 100%;
-    margin: 10px;
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    z-index: 100;
 }
 .image-wrapper {
     width: auto;
@@ -25,8 +26,8 @@
 
 
 .unclicked-post-image {
-    width: 400px;
-    height: 500px;
+    width: 250px;
+    height: 350px;
     object-fit: cover;
  }
 
