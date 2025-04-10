@@ -5,7 +5,7 @@ import OpenedPost from "./OpenedPost/OpenedPost";
 
 function Profile() {
     const [posts, setPosts] = useState([]);
-    const [currentPost, setPost] = useState({content:"", imageUrl:""});
+    const [currentPost, setPost] = useState({likes: 0, comments: [], content:"", imageUrl:""});
     const [clickedPost, setClickedPost] = useState(null);
 
     function setImage(event) {
@@ -42,7 +42,7 @@ function Profile() {
         }
     }
     return (
-        <div>
+        <div className="profile-home">
             <input onChange={setImage} type="file" accept=".jpg, .jpeg, .png"></input>
             <button onClick={makePost}>Post</button>
             <PostHistory posts={posts} handlePostClick={handlePostClick}/>

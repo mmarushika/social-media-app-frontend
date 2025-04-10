@@ -1,3 +1,6 @@
 .dm-window {
-    background-color: yellow;
+    position: relative;
+    margin-left: 100px;
+    box-sizing: border-box;
+    right: 0;
 }

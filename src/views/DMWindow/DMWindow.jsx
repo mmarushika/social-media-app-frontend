@@ -26,6 +26,7 @@ function DMWindow({sender, receiver}) {
     }
     console.log(message);
     await addMessage(message);
+    fetchMessages();
   }
     return (
         <div className="dm-window">

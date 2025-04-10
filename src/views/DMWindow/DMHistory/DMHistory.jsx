@@ -2,10 +2,13 @@ import "./DMHistory.css";
 
 import Message from "../Message/Message";
 
-function DMHeader({messages, sender}) {
-    //console.log(messages);
+import { useEffect, useRef } from "react";
+
+function DMHeader({ messages, sender }) {
+    const listMsgs = useRef(null);
+
     function getType(i) {
-        if(i.sender == sender) {
+        if (i.sender == sender) {
             //console.log("sent");
             return "sent";
         } else {
@@ -13,9 +16,15 @@ function DMHeader({messages, sender}) {
             return "received";
         }
     }
+    /* useEffect(() => {      
+        listMsgs.current?.lastElementChild?.scrollIntoView();
+    }, [messages]); */
+
     return (
-        <div className="dm-history">
-            {messages.map(i => <Message type={getType(i)} content={i.content} timestamp={i.timestamp}/>)}
+        <div className="dm-history" ref={listMsgs}>
+            <div className="dm-wrapper">
+                {messages.map(i => <Message type={getType(i)} content={i.content} timestamp={i.timestamp} />)}
+            </div>
         </div>
     );
 }

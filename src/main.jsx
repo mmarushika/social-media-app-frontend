@@ -5,7 +5,7 @@ import './index.css'
 import App from './App.jsx'
 import NavBar from './components/NavBar/NavBar.jsx';
 import Auth from './views/Auth/Auth.jsx';
-import DMWindow from './views/DMWindow/DMWIndow.jsx';
+import DMWindow from './views/DMWindow/DMWindow.jsx';
 import Profile from './views/Profile/Profile.jsx';
 const sender = "Alice";
 const receiver = "Bob";
