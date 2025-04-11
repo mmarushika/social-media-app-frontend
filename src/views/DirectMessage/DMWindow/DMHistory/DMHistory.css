@@ -1,5 +1,4 @@
 .dm-history {
-    height: 100vh;
     position: relative;
     margin-bottom: 120px;
     margin-top: 75px;
@@ -7,7 +6,7 @@
 }
 
 .dm-wrapper {
-    overflow-y: scroll;
+    overflow-y: hidden;
 }
 
 /*.autoscrollable-wrapper {

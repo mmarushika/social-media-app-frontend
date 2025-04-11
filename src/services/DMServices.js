@@ -1,6 +1,6 @@
 
-export async function getMessageHistory() {
-    const res = await fetch("http://localhost:8000/messages", {
+export async function getMessageHistory(sender, receiver) {
+    const res = await fetch(`http://localhost:8000/messages?sender=${sender}&receiver=${receiver}`, {
         method: 'GET',
         headers: {
             "Content-Type": "application/json"

@@ -5,7 +5,7 @@ import Message from "../Message/Message";
 import { useEffect, useRef } from "react";
 
 function DMHistory({ messages, sender }) {
-    const endMsgRef = useRef(null);
+    const msgList = useRef(null);
 
     function getType(i) {
         if (i.sender == sender) {
@@ -23,16 +23,15 @@ function DMHistory({ messages, sender }) {
 
     useEffect(() => {   
         // scrolls to the most recent message   
-        console.log(endMsgRef);
-        endMsgRef.current?.scrollIntoView();
+        msgList.current?.lastElementChild?.scrollIntoView();
     }, [messages]);
 
     return (
         <div className="dm-history">
-            <div className="dm-wrapper" >
+            <div className="dm-wrapper" ref={msgList}>
                 {messages.map(i => <Message type={getType(i)} content={i.content} timestamp={i.timestamp} />)}
             </div >
-            <div ref={endMsgRef}></div>
+            <div></div>
         </div>
     );
 }

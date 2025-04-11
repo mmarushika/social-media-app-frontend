@@ -13,11 +13,11 @@ function DMWindow({sender, receiver}) {
 
   function fetchMessages() {
     console.log("fetch");
-    getMessageHistory()
+    getMessageHistory(sender, receiver)
       .then(data => {
         setMessages(data)});
   }
-  useEffect(fetchMessages, []);
+  useEffect(fetchMessages, [receiver]);
 
   async function handleSend(content) {
     const message = {

@@ -2,7 +2,10 @@ import "./DMList.css";
 
 import { useState, useEffect } from "react";
 import { getData, addData } from "../../../services/PostServices";
-function DMList({sender}) {
+
+import DMContact from "../DMContact/DMContact";
+
+function DMList({sender, selectDMContact}) {
     const [dmList, setDMList] = useState([]);
 
     function fetchDMList() {
@@ -17,22 +20,7 @@ function DMList({sender}) {
 
     return (
         <div className="dm-list">
-            {dmList.map(i => <h1>{i}</h1>)}
-            {dmList.map(i => <h1>{i}</h1>)}
-
-            {dmList.map(i => <h1>{i}</h1>)}
-            {dmList.map(i => <h1>{i}</h1>)}
-            {dmList.map(i => <h1>{i}</h1>)}
-            {dmList.map(i => <h1>{i}</h1>)}
-            {dmList.map(i => <h1>{i}</h1>)}
-            {dmList.map(i => <h1>{i}</h1>)}
-            {dmList.map(i => <h1>{i}</h1>)}
-            {dmList.map(i => <h1>{i}</h1>)}
-            {dmList.map(i => <h1>{i}</h1>)}
-            {dmList.map(i => <h1>{i}</h1>)}
-            {dmList.map(i => <h1>{i}</h1>)}
-            {dmList.map(i => <h1>{i}</h1>)}
-            {dmList.map(i => <h1>{i}</h1>)}
+            {dmList.map(i => <DMContact contact={i} onClick={selectDMContact} />)}
         </div>
     );
 }
