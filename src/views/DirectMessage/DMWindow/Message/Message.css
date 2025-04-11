@@ -1,15 +1,15 @@
 .sent {
     float: right;
-    background-color: gray;
+    background-image: radial-gradient( rgb(75, 169, 233), rgb(28, 153, 237));
 }
 .received {
+    background-image: radial-gradient(rgb(87, 86, 86), rgb(74, 73, 73));
     float: left;
 }
 
 .message {
     padding: 10px;
     border-radius: 25px;
-    border: solid white;
     display: block;
     width: 70%;
     margin: 10px;

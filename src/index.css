@@ -6,6 +6,9 @@ body {
   position: relative;
 }
 
+.view {
+  margin-left: 100px
+}
 #root {
 
 

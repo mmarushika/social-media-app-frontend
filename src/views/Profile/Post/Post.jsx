@@ -1,17 +1,28 @@
 import "./Post.css";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+
+import { getImageUrl } from "../../../services/PostServices";
 
 function Post({post, onClick}) {
-    const [isClicked, setClickStatus] = useState(false);
-    if(isClicked == false) {
-        return (
-            <div onClick={() => onClick(post)} className="unclicked-post">
-                <div className="image-wrapper">
-                    <img className="unclicked-post-image" src = {post.imageUrl}></img>
-                </div>
+    console.log(post);
+    const [imageUrl, setImageUrl] = useState(null);
+    function fetchImageUrl() {
+        getImageUrl(post.imageFilepath).then(url => {
+            console.log(url);
+            setImageUrl(url)});
+    }
+    useEffect(fetchImageUrl, []);
+    return (
+        <div onClick={() => onClick(post)} className="unclicked-post">
+            <div className="image-wrapper">
+                <img className="unclicked-post-image" src = {imageUrl}></img>
             </div>
-        );
-    } else {
+        </div>
+    );
+
+   /* //const [isClicked, setClickStatus] = useState(false);
+    //if(isClicked == false) {
+    //} else {
         return (
             <div onClick={() => onClick(post)} className="clicked-post">
                 <div className="image-wrapper">
@@ -22,6 +33,6 @@ function Post({post, onClick}) {
                 </div>
             </div>
         )
-    }
+    }*/
 }
 export default Post;

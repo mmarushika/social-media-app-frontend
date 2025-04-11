@@ -10,11 +10,11 @@
 .message-bar-outer {
     position: fixed;
     bottom: 0;
+    left: 440px;
     right: 0;
-    left: 100px;
     background-color: rgb(52, 49, 49);
     padding: 20px;
-    border: solid gray;
+    border-left: solid gray;
 }
 
 .message-bar {

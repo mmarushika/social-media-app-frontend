@@ -1,0 +1,7 @@
+.dm-list {
+    min-width: 300px;
+    overflow-y: scroll;
+    height: 100vh;
+    border-right: solid gray;
+    padding: 20px;
+}

@@ -5,17 +5,19 @@ import DMHistory from "./DMHistory/DMHistory";
 import MessageBar from "./MessageBar/MessageBar";
 
 import {useState, useEffect} from 'react';
-import {addMessage, getMessageHistory} from '../../services/DMServices';
+import {addMessage, getMessageHistory} from '../../../services/DMServices';
   
 function DMWindow({sender, receiver}) {
   const [messages, setMessages] = useState([]);
+  const [updateStatus, setUpdateStatus] = useState(false);
 
-  const fetchMessages = () => {
+  function fetchMessages() {
+    console.log("fetch");
     getMessageHistory()
       .then(data => {
         setMessages(data)});
   }
-  useEffect(fetchMessages);
+  useEffect(fetchMessages, []);
 
   async function handleSend(content) {
     const message = {
@@ -25,8 +27,8 @@ function DMWindow({sender, receiver}) {
       timestamp : JSON.stringify(new Date),
     }
     console.log(message);
-    await addMessage(message);
-    fetchMessages();
+    addMessage(message)
+    .then(fetchMessages());
   }
     return (
         <div className="dm-window">

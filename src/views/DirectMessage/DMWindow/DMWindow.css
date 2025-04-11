@@ -1,0 +1,10 @@
+.dm-window {
+    flex: 5;
+    min-width: 450px;
+    overflow-y: scroll;
+    height: 100vh;
+    /*position: relative;
+    margin-left: 100px;
+    box-sizing: border-box;
+    right: 0;*/
+}

@@ -1,11 +1,13 @@
 .dm-history {
+    height: 100vh;
     position: relative;
-    overflow: scroll;
-    margin-bottom: 140px;
+    margin-bottom: 120px;
+    margin-top: 75px;
+    overflow-y: scroll;
 }
 
 .dm-wrapper {
-
+    overflow-y: scroll;
 }
 
 /*.autoscrollable-wrapper {
