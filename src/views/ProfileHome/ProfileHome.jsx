@@ -1,12 +1,13 @@
-import "./Profile.css";
+import "./ProfileHome.css";
 
 import {getData, addData, uploadImage, getImageUrl} from "../../services/PostServices";
 import {useState, useEffect, useRef} from "react";
 import PostHistory from "./PostHistory/PostHistory";
 import OpenedPost from "./OpenedPost/OpenedPost";
 import CreatePostPopup from "./CreatePostPopup/CreatePostPopup";
+import Profile from "./Profile/Profile";
 
-function Profile({user}) {
+function ProfileHome({user}) {
     const [posts, setPosts] = useState([]);
     //const [currentPost, setPost] = useState({likes: 0, comments: [], content:"", imageUrl:""});
     const [clickedPost, setClickedPost] = useState(null);
@@ -67,8 +68,16 @@ function Profile({user}) {
         //uploadImage(file);
     }
 
+    const profile = {
+        "username": "alice123",
+        "name": "Alice Adams",
+        "imageFilepath": "/Users/marushikamanohar/Programming/Fullstack/social-media-app/social-media-app-backend/images/posts/IMG_5003.jpeg",
+        "description": "I am a test."
+    }
+
     return (
         <div className="view profile-home">
+            <Profile user={profile} viewer={false}/>
             <button onClick={() => setCreatePost(prev => !prev)}>Create Post</button>
             {createPost ? 
                 <CreatePostPopup user ={user} closeHandler={handleBackgroundClick} makePost={makePost} />
@@ -79,7 +88,7 @@ function Profile({user}) {
         </div>
     );
 }
-export default Profile;
+export default ProfileHome;
 
 /*
 
