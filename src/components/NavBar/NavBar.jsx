@@ -14,7 +14,7 @@ function NavBar() {
                 <Link to="/user"><img className="nav-icon" src={profile}></img></Link>
                 <Link to="/user"><img className="nav-icon" src={home}></img></Link>
                 <Link to="/inbox"><img className="nav-icon" src={message}></img></Link>
-                <Link><img className="nav-icon" src={create}></img></Link>
+                <Link to="/user/create"><img className="nav-icon" src={create}></img></Link>
             </div>
         </div>
     );

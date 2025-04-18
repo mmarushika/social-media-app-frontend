@@ -1,10 +1,11 @@
-import { uploadPostImage } from "../../../services/PostServices";
+import { uploadPostImage, addData } from "../../../services/PostServices";
 import "./CreatePostPopup.css";
 
+import {Link, useNavigate} from "react-router";
 import {useState} from "react";
 
-function CreatePostPopup({user, close}) {
-    //const [post, setPost] = useState({author:"", likes: 0, comments: [], content:"", imageFilepath:""});
+function CreatePostPopup({user}) {
+    const navigate = useNavigate();
     const [currentFile, setFile] = useState(null);
     const [currentContent, setContent] = useState(null);
     function updateFile(event) {
@@ -26,13 +27,14 @@ function CreatePostPopup({user, close}) {
         addData("http://localhost:8000/post", post)
             .then(
                 uploadPostImage(currentFile)
-            ).then(
-                fetchPosts()
-            ).then(
-                setCreatePost(null)
             )
     }
     
+    function close(e) {
+        if(e.target.className == "transparent-background") {
+            navigate("/user");
+        }
+    }
     return (
         <div className="transparent-background" onClick={close}>
             <div className="create-post-popup">
@@ -45,7 +47,7 @@ function CreatePostPopup({user, close}) {
                 <div className="post-content-wrapper">
                     <textarea className="post-content" placeholder="Add a message" onChange={updateContent}></textarea>
                 </div>
-                <button className="post-button" onClick={() => {makePost(initPost(), currentFile)}}>Post</button>
+                <Link to="/user"><button className="post-button" onClick={makePost}>Post</button></Link>
             </div>
         </div>
     );

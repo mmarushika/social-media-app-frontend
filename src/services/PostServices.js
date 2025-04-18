@@ -7,6 +7,7 @@ export async function getData(url) {
        }
     });
     const body = await res.json();
+    console.log("fetch", body);
     return body;
     /*let requestOptions = {
         'content-type': 'application/json',
@@ -59,11 +60,17 @@ export function uploadProfileImage(file, uploadFolder) {
     });
 }
 
-export function getImageUrl(filepath) {
+export async function getImageUrl(filepath) {
     //const filepath = '/Users/marushikamanohar/Programming/Fullstack/mongo-test/images/posts/IMG_5003.jpeg';
-    const url = fetch(`http://localhost:8000/image?filepath=${filepath}`)
+    const res = await fetch(`http://localhost:8000/image?filepath=${filepath}`);
+    console.log(res);
+    const blob = await res.blob();
+    return URL.createObjectURL(blob);
+    console.log(url);
+    /*const url = fetch(`http://localhost:8000/image?filepath=${filepath}`)
         .then(response => response.blob())
-        .then(blob => URL.createObjectURL(blob));
+        .then(blob => URL.createObjectURL(blob))
+        .then(res => console.log(res));*/
     return url;
 }
 

@@ -17,7 +17,7 @@ const PrivateRoute = ({ isAuthenticated, view }) => {
 
 
 function App() {
-  const [user, setUser] = useState({ isAuthenticated: false, username: null });
+  const [user, setUser] = useState({ isAuthenticated: true, username: null });
   const navigate = useNavigate();
   function authenticate(username, password) {
     getData(`http://localhost:8000/auth?username=${username}&password=${password}`)
@@ -53,7 +53,10 @@ function App() {
             view={<ProfileHome user={user.username} setProfile={false}/>} />}></Route>
           <Route path="/user/account"
           element={<PrivateRoute isAuthenticated={user.isAuthenticated} 
-            view={<ProfileHome user={user.username} setProfile={true}/>} />}></Route>
+            view={<ProfileHome user={user.username} createPost={false} setProfile={true}/>} />}></Route>
+          <Route path="/user/create"
+          element={<PrivateRoute isAuthenticated={user.isAuthenticated} 
+            view={<ProfileHome user={user.username} createPost={true} setProfile={false}/>} />}></Route>
       </Routes>
     </div>
 

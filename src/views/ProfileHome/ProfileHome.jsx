@@ -1,5 +1,6 @@
 import "./ProfileHome.css";
 
+import {useNavigate} from "react-router";
 import {getData} from "../../services/PostServices";
 import {useState, useEffect, useRef} from "react";
 import PostHistory from "./PostHistory/PostHistory";
@@ -8,12 +9,11 @@ import CreatePostPopup from "./CreatePostPopup/CreatePostPopup";
 import SetProfilePopup from "./SetProfilePopup/SetProfilePopup";
 import Profile from "./Profile/Profile";
 
-function ProfileHome({setProfile, user}) {
+function ProfileHome({createPost, setProfile, user}) {
     console.log(user, setProfile)
     const [posts, setPosts] = useState([]);
     //const [currentPost, setPost] = useState({likes: 0, comments: [], content:"", imageUrl:""});
     const [clickedPost, setClickedPost] = useState(null);
-    const [createPost, setCreatePost] = useState(null);
 
     function fetchPosts() {
         console.log(user);
@@ -34,8 +34,8 @@ function ProfileHome({setProfile, user}) {
 
     function handleBackgroundClick(event) {
         if(event.target.className == "transparent-background") {
-            setClickedPost(null);
-            setCreatePost(null);
+            //setClickedPost(null);
+            //setCreatePost(null);
         }
     }
 
@@ -60,15 +60,14 @@ function ProfileHome({setProfile, user}) {
     } 
     return (
         <div className="view profile-home">
+            <button onClick={fetchPosts}>Get Posts</button>
             {setProfile ? 
                 <SetProfilePopup user={user}/> : <></>
             }
-            <Profile user={profile} viewer={"balice123"}/>
-            <button onClick={() => {setCreatePost(prev => !prev); console.log("clicked")}}>Create Post</button>
             {createPost ? 
-                <CreatePostPopup user ={user} close={handleBackgroundClick} />
-                : <></>
+                <CreatePostPopup user ={user} /> : <></>
             }  
+            <Profile user={profile} viewer={"balice123"}/>
             <PostHistory posts={posts} handlePostClick={handlePostClick}/>
             { getClickedPost() }
         </div>
