@@ -1,5 +1,8 @@
 .profile-home {
-    padding-left: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 lablel {
     opacity: 0.5;

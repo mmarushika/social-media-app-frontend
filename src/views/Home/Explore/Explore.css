@@ -1,0 +1,30 @@
+.explore {
+    width: 350px;
+    height: 100vh;
+    border-right: solid gray;
+}
+
+
+.explore-wrapper {
+    margin-left: 50px;
+    height: 100%;
+    /*margin: 50px;
+    margin-top: 25px;*/
+}
+
+.explore-current-user-wrapper {
+    height: 100px;
+    display: flex;
+    align-items: center;
+}
+.explore-header {
+    font-weight: bold;
+    color: gray;
+    height: 30px;
+    /*margin-bottom: 20px;
+    margin-top: 20px;*/
+}
+
+.scroll-y {
+    
+}

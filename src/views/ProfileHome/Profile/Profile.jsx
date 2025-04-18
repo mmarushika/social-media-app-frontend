@@ -5,9 +5,10 @@ import { useState, useEffect } from "react";
 import { getImageUrl, getData, updateData }  from "../../../services/PostServices";
 import EditProfilePopup from "../EditProfilePopup/EditProfilePopup.jsx";
 
-function Profile({ user, viewer }) {
+function Profile({user, viewer}) {
     const [imageUrl, setImageUrl] = useState("");
     const [refresh, setRefresh] = useState(false);
+    console.log(viewer);
     const [profileStats, setProfileStats] = useState({
         posts: 20,
         following: [1, 2, 3],
@@ -24,7 +25,7 @@ function Profile({ user, viewer }) {
     // Declare effects
     useEffect(fetchProfile, []);
     useEffect(() => {
-        fetchImageUrl(profile.imageFilepath)
+        if(profile.imageFilepath != "") fetchImageUrl(profile.imageFilepath)
     }, [profile]);   
 
     // Declare fetch functions
@@ -75,14 +76,16 @@ function Profile({ user, viewer }) {
             <div className="profile-info">
                 <div className="profile-header">
                     <div className="profile-username">{user}</div>
-                    {user === viewer ?
+                    {viewer ?
+                        <button className="profile-button" onClick={follow}>Follow</button> 
+                        :
                         <div className="account-owner-buttons">
                             <button className="profile-button" onClick={editProfile}>Edit Profile</button> 
                             <div className="settings-button-wrapper">
                                 <img className="settings-button" src={settings}></img>
                             </div>
                         </div>
-                        : <button className="profile-button" onClick={follow}>Follow</button> }
+                    }
                 </div>
                 <div className="profile-stats">
                     <span className="profile-stats-field">Posts <b className="white"> {profileStats.posts}</b></span>

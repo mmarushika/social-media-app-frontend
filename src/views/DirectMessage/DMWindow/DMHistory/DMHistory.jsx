@@ -16,22 +16,12 @@ function DMHistory({ messages, sender }) {
             return "received";
         }
     }
-    
-    // useEffect with empty array only executes when it is mounted
-    // https://stackoverflow.com/questions/58101018/react-calling-a-method-on-load-only-once
-    // https://stackoverflow.com/questions/72372407/react-auto-scroll-to-bottom-of-a-div
-
-    useEffect(() => {   
-        // scrolls to the most recent message   
-        msgList.current?.lastElementChild?.scrollIntoView();
-    }, [messages]);
 
     return (
         <div className="dm-history">
-            <div className="dm-wrapper" ref={msgList}>
+            <div className="dm-wrapper">
                 {messages.map(i => <Message type={getType(i)} content={i.content} timestamp={i.timestamp} />)}
             </div >
-            <div></div>
         </div>
     );
 }

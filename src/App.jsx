@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Navigate, Routes, Route, useNavigate } from 'react-router';
 import './index.css'
 import NavBar from './components/NavBar/NavBar.jsx';
@@ -6,6 +6,7 @@ import Login from './views/Login/Login.jsx';
 import Signup from './views/Signup/Signup.jsx';
 import DirectMessage from './views/DirectMessage/DirectMesssage.jsx';
 import ProfileHome from './views/ProfileHome/ProfileHome.jsx';
+import Home from './views/Home/Home.jsx';
 
 import { getData, addData } from './services/PostServices.js';
 const sender = "Alice";
@@ -18,8 +19,19 @@ const PrivateRoute = ({ isAuthenticated, view }) => {
 
 function App() {
   const [user, setUser] = useState({ isAuthenticated: false, username: null });
+  const [users, setUsers] = useState([]);
   const navigate = useNavigate();
+  useEffect(() => {
+    async function fetchPosts() {
+      const data = await getData(`http://localhost:8000/users`);
+      console.log(data);
+      setUsers([...data.filter((i) => i != user)]);
+    }
+    fetchPosts();
+  }, []);
+    
   function authenticate(username, password) {
+    console.log(username, password);
     getData(`http://localhost:8000/auth?username=${username}&password=${password}`)
       .then(res => {
         console.log(res);
@@ -39,25 +51,41 @@ function App() {
         .then(setUser({isAuthenticated: true, username: user.username}))
         .then(navigate("/user/account"));
   }
+
   return (
     <div>
-      {user.isAuthenticated ? <NavBar /> : <></>}
+      {user.isAuthenticated ? <NavBar user={user.username}/> : <></>}
       <Routes>
-        <Route path="/login" element={user.isAuthenticated ? <Navigate to="/user" /> :<Login authenticate={authenticate}/>} />
+        <Route path="/login" element={user.isAuthenticated ? <Navigate to={"/"+user.username} /> :<Login authenticate={authenticate}/>} />
         <Route path="/signup" element={<Signup signup={signup}/>} />
+        <Route path="/home"
+          element={<PrivateRoute isAuthenticated={user.isAuthenticated} 
+            view={<Home user={user.username} />} />}></Route>
         <Route path="/inbox"
           element={<PrivateRoute isAuthenticated={user.isAuthenticated} 
             view={<DirectMessage sender={user.username} />} />}></Route>
-        <Route path="/user"
+
+        {users.map(username => 
+        <Route path={username}
           element={<PrivateRoute isAuthenticated={user.isAuthenticated} 
-            view={<ProfileHome user={user.username} setProfile={false}/>} />}></Route>
-          <Route path="/user/account"
+            view={<ProfileHome user={username} viewer={false} createPost={false} setProfile={false} />} />}></Route>
+        )}
+        {users.map(username => 
+        <Route path={"/" + username + "/view"}
           element={<PrivateRoute isAuthenticated={user.isAuthenticated} 
-            view={<ProfileHome user={user.username} createPost={false} setProfile={true}/>} />}></Route>
-          <Route path="/user/create"
+            view={<ProfileHome user={username} viewer={true} createPost={false} setProfile={false}/>}/>}></Route>
+        )}
+        {users.map(username => 
+        <Route path={"/" + username + "/account"}
           element={<PrivateRoute isAuthenticated={user.isAuthenticated} 
-            view={<ProfileHome user={user.username} createPost={true} setProfile={false}/>} />}></Route>
-      </Routes>
+            view={<ProfileHome user={username} viewer={false} createPost={false} setProfile={true} />} />}></Route>
+        )}
+        {users.map(username => 
+        <Route path={"/" + username + "/create"}
+          element={<PrivateRoute isAuthenticated={user.isAuthenticated} 
+            view={<ProfileHome user={user.username} viewer={false} createPost={true} setProfile={false} />} />}></Route>
+        )}
+        </Routes>
     </div>
 
   );

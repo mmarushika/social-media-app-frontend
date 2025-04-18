@@ -7,14 +7,14 @@ import profile from "../../assets/profile-white.png";
 import create from "../../assets/create-white.png";
 import message from "../../assets/white-message.png";
 
-function NavBar() {
+function NavBar({user}) {
     return (
         <div className="nav-bar">
             <div className="nav-bar-wrapper">
-                <Link to="/user"><img className="nav-icon" src={profile}></img></Link>
-                <Link to="/user"><img className="nav-icon" src={home}></img></Link>
+                <Link to={"/" + user}><img className="nav-icon" src={profile}></img></Link>
+                <Link to="/home"><img className="nav-icon" src={home}></img></Link>
                 <Link to="/inbox"><img className="nav-icon" src={message}></img></Link>
-                <Link to="/user/create"><img className="nav-icon" src={create}></img></Link>
+                <Link to={"/" + user + "/create"}><img className="nav-icon" src={create}></img></Link>
             </div>
         </div>
     );

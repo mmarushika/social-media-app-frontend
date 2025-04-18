@@ -4,7 +4,7 @@ import{Link} from "react-router";
 import { addData, uploadProfileImage } from "../../../services/PostServices";
 import {useState} from "react";
 
-function SetProfilePopup({user}) {
+function SetProfilePopup({user, setUpdate}) {
     const [currentFile, setFile] = useState(null);
     const [currentName, setName] = useState(null);
     const [currentDescription, setDescription] = useState(null);
@@ -25,6 +25,7 @@ function SetProfilePopup({user}) {
         }
         addData("http://localhost:8000/new-profile", {profile:profile, settings:settings})
         if(currentFile != null) uploadProfileImage(currentFile);
+        setUpdate(x => x + 1);
     }
 
     return (
