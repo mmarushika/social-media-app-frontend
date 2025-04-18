@@ -2,7 +2,7 @@ import "./CreatePostPopup.css";
 
 import {useState} from "react";
 
-function CreatePostPopup({closeHandler, makePost}) {
+function CreatePostPopup({user, close}) {
     //const [post, setPost] = useState({author:"", likes: 0, comments: [], content:"", imageFilepath:""});
     const [currentFile, setFile] = useState(null);
     const [currentContent, setContent] = useState(null);
@@ -14,20 +14,29 @@ function CreatePostPopup({closeHandler, makePost}) {
         setContent(event.target.value);
     }
 
-    function initPost() {
-        return {
-            author : "",
+    function makePost() {
+        const post = {
+            creator : user,
             content : currentContent,
             comments : 0,
             likes : 0,
             imageFilepath: currentFile.name,
         }
+        addData("http://localhost:8000/post", post)
+            .then(
+                uploadImage(currentFile)
+            ).then(
+                fetchPosts()
+            ).then(
+                setCreatePost(null)
+            )
     }
+    
     return (
-        <div className="transparent-background" onClick={closeHandler}>
+        <div className="transparent-background" onClick={close}>
             <div className="create-post-popup">
                 <input className="select-image" onChange={updateFile} type="file" accept=".jpg, .jpeg, .png"></input>
-                <div className="image-wrapper">
+                <div className="opened-post-image-wrapper">
                     {currentFile ?
                         <img className="opened-post-image" src={URL.createObjectURL(currentFile)}></img> 
                         : <></>}   

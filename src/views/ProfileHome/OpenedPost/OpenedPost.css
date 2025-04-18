@@ -3,9 +3,9 @@
     position: relative;
     min-width: 780px;
     width: 70vw;
-    height: 80vh;
-    border-radius: 10px;
-    padding: 10px;
+    height: 90vh;
+    border-radius: 0px;
+    padding: 0px;
     background-color: rgb(52, 49, 49);
     display: flex;
     flex-wrap: wrap;
@@ -14,7 +14,7 @@
 .transparent-background {
     width: 100vw;
     height: 100vh;
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.05);
     display: flex;
     justify-content: center;
     align-items: center;

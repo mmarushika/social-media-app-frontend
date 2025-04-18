@@ -29,6 +29,15 @@ export async function addData(url, data) {
     });
 }
 
+export async function updateData(url, user, data) {
+    const res = await fetch(url, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
+    });
+}
 
 export function uploadImage(file) {
     const formData = new FormData();

@@ -1,22 +1,81 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Navigate, Routes, Route, useNavigate } from 'react-router';
+import './index.css'
+import NavBar from './components/NavBar/NavBar.jsx';
+import Login from './views/Login/Login.jsx';
+import Signup from './views/Signup/Signup.jsx';
+import DirectMessage from './views/DirectMessage/DirectMesssage.jsx';
+import ProfileHome from './views/ProfileHome/ProfileHome.jsx';
+
+import { getData, addData } from './services/PostServices.js';
+const sender = "Alice";
+const receiver = "Bob";
+
+const PrivateRoute = ({ isAuthenticated, view }) => {
+  return isAuthenticated ? view : <Navigate to="/login" />
+};
+
 
 function App() {
-  const [view, setView] = useState("chat");
-
-  function getView() {
-    if(view == "chat") {
-      return <ChatWindow></ChatWindow>
+  const [user, setUser] = useState({ isAuthenticated: true, username: null });
+  const navigate = useNavigate();
+  function authenticate(username, password) {
+    getData(`http://localhost:8000/auth?username=${username}&password=${password}`)
+      .then(res => {
+        console.log(res);
+        if(res.isAuthenticated == true) {
+          setUser({ isAuthenticated: true, username: username });
+        } else {
+          navigate("/login");
+        }
+      })
+  }
+  function signup(username, password) {
+    const user = {
+        username: username,
+        password: password
     }
+    addData(`http://localhost:8000/signup`, user)
+        .then(setUser({isAuthenticated: true, username: user.username}))
+        .then(navigate("/user/account"));
   }
   return (
-    <div className="app">
-       <NavBar />
-       {getView()}
+    <div>
+      {user.isAuthenticated ? <NavBar /> : <></>}
+      <Routes>
+        <Route path="/login" element={user.isAuthenticated ? <Navigate to="/user" /> :<Login authenticate={authenticate}/>} />
+        <Route path="/signup" element={<Signup signup={signup}/>} />
+        <Route path="/inbox"
+          element={<PrivateRoute isAuthenticated={user.isAuthenticated} 
+            view={<DirectMessage sender={user.username} />} />}></Route>
+        <Route path="/user"
+          element={<PrivateRoute isAuthenticated={user.isAuthenticated} 
+            view={<ProfileHome user={user.username} setProfile={false}/>} />}></Route>
+          <Route path="/user/account"
+          element={<PrivateRoute isAuthenticated={user.isAuthenticated} 
+            view={<ProfileHome user={user.username} setProfile={true}/>} />}></Route>
+      </Routes>
     </div>
+
   );
 }
 
-export default App
+/*
+<Route path="/" element={user.isAuthenticated ? 
+          <DirectMessage sender={user.username} /> : <ProfileHome user={user.username} /> } />
+        <Route path="/inbox" element={user.isAuthenticated ? 
+          <DirectMessage sender={user.username} /> : <Login authenticate={authenticate} /> } />
+        <Route path="/user" element={user.isAuthenticated ? 
+          <ProfileHome user={user.username} />  : <Login authenticate={authenticate} /> } />*/
+
+/*<Route path="/inbox" element={
+          <PrivateRoute
+            user = {user}
+            view={<DirectMessage sender={user.username} />}
+          />} />
+        <Route path="/user" element={
+          <PrivateRoute
+            user = {user}
+            view={<ProfileHome user={user.username} />}
+          />} />*/
+export default App;

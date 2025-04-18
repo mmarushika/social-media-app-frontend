@@ -6,7 +6,7 @@ import DMWindow from "./DMWindow/DMWIndow";
 import {useState} from "react";
 
 function DirectMessage({sender}) {
-    const [currentContact, setContact] = useState("Hannah");
+    const [currentContact, setContact] = useState("");
     function selectDMContact(contact) {
         console.log("contact");
         setContact(contact);

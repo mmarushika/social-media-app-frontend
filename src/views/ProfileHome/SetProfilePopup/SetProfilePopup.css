@@ -1,0 +1,77 @@
+.profile-input-wrapper {
+    float: right;
+    width: 45%;
+    margin-left: 20px;
+    font-size: 1em;
+}
+
+.profile-input {
+    font-size: 1em;
+    width: 90%;
+    min-height: 50px;
+    border:none;
+    border-bottom: solid gray;
+    outline: none;
+    background: transparent;
+    color: white;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.profile-description-input {
+    height: 250px;
+    resize: none;
+    overflow-y: scroll;
+}
+
+textarea {
+    font-family: system-ui, Helvetica, Arial, sans-serif;
+    font-size: 1em;
+}
+
+.right {
+    float: right;
+    margin-right: 15px;
+}
+
+.circle-wrapper {
+    height: 350px;
+    width: 350px;
+}
+
+.profile-image-input-wrapper {
+    float: left;
+    width: 50%;
+    height: 100%;
+    vertical-align: middle;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.circle {
+    border-radius: 50%;
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    z-index: 100;
+}
+
+.profile-file-input-wrapper {
+    height: 40px;
+    width: 100%;
+    background-color: pink;
+}
+
+.select-image {
+    font-size: 1em;
+    border: none;
+    border-radius: 10px;
+    margin-left: 20px;
+    vertical-align: middle;
+    width: 100px;
+    height: 100%;
+    background-color:rgb(130, 128, 128);
+    color: white; 
+}

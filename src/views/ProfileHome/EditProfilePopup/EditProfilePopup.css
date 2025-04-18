@@ -1,0 +1,20 @@
+
+.edit-profile-popup {
+    position: relative;
+    min-width: 780px;
+    width: 70vw;
+    height: 90vh;
+    border-radius: 0px;
+    padding: 0px;
+    background-color: rgb(52, 49, 49);
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.profile-image-wrapper {
+    float: left;
+    max-width: 55%;
+    min-width: 40%;
+    height: 100%;
+    vertical-align: middle;
+}

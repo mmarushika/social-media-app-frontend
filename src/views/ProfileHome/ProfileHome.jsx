@@ -5,17 +5,18 @@ import {useState, useEffect, useRef} from "react";
 import PostHistory from "./PostHistory/PostHistory";
 import OpenedPost from "./OpenedPost/OpenedPost";
 import CreatePostPopup from "./CreatePostPopup/CreatePostPopup";
+import SetProfilePopup from "./SetProfilePopup/SetProfilePopup";
 import Profile from "./Profile/Profile";
 
-function ProfileHome({user}) {
+function ProfileHome({setProfile, user}) {
     const [posts, setPosts] = useState([]);
     //const [currentPost, setPost] = useState({likes: 0, comments: [], content:"", imageUrl:""});
     const [clickedPost, setClickedPost] = useState(null);
     const [createPost, setCreatePost] = useState(null);
 
     function fetchPosts() {
-        console.log(posts);
-        getData("http://localhost:8000/posts")
+        console.log(user);
+        getData(`http://localhost:8000/posts?username=${user}`)
             .then((data) => setPosts(data));
     }
 
@@ -49,38 +50,22 @@ function ProfileHome({user}) {
         }
     }
 
-    function makePost(post, file) {
-        post.author = user;
-        addData("http://localhost:8000/post", post)
-            .then(
-                uploadImage(file)
-            ).then(
-                fetchPosts()
-            ).then(
-                setCreatePost(null)
-            )
-    }
-
-    const fileRef = useRef(null);
-    function test() {
-        console.log(fileRef.current?.files[0]?.name);
-        const file = fileRef.current?.files[0];
-        //uploadImage(file);
-    }
-
     const profile = {
-        "username": "alice123",
+        "username": user,
         "name": "Alice Adams",
         "imageFilepath": "/Users/marushikamanohar/Programming/Fullstack/social-media-app/social-media-app-backend/images/posts/IMG_5003.jpeg",
-        "description": "I am a test."
-    }
-
+        "description": `I am a tes. I am a test. I am a test.I am a test.I am a 
+        test.I am test am a tes. I am a test. I am a test.I am a test.I am a test.I am test`
+    } 
     return (
         <div className="view profile-home">
-            <Profile user={profile} viewer={false}/>
+            {setProfile ? 
+                <SetProfilePopup /> : <></>
+            }
+            <Profile user={profile} viewer={"balice123"}/>
             <button onClick={() => setCreatePost(prev => !prev)}>Create Post</button>
             {createPost ? 
-                <CreatePostPopup user ={user} closeHandler={handleBackgroundClick} makePost={makePost} />
+                <CreatePostPopup user ={user} close={handleBackgroundClick} />
                 : <></>
             }  
             <PostHistory posts={posts} handlePostClick={handlePostClick}/>
@@ -89,6 +74,26 @@ function ProfileHome({user}) {
     );
 }
 export default ProfileHome;
+
+
+/*const fileRef = useRef(null);
+function test() {
+    console.log(fileRef.current?.files[0]?.name);
+    const file = fileRef.current?.files[0];
+    uploadImage(file);
+}
+   const profile = {
+        "username": "alice123",
+        "name": "Alice Adams",
+        "imageFilepath": "/Users/marushikamanohar/Programming/Fullstack/social-media-app/social-media-app-backend/images/posts/IMG_5003.jpeg",
+        "description": `I am a test
+            I am a test
+            I am a test
+            I am a test
+            I am a test
+            I am test`
+    } 
+*/
 
 /*
 

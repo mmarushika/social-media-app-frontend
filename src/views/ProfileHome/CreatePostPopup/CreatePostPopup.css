@@ -15,10 +15,11 @@
     height: 30px;
     float: right;
 }
-.image-wrapper {
+.opened-post-image-wrapper {
     float: left;
-    max-width: 55%;
-    min-width: 40%;
+    /*max-width: 55%;
+    min-width: 40%;*/
+    width: 50%;
     height: 100%;
     vertical-align: middle;
 }
