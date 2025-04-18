@@ -6,19 +6,12 @@ import { getImageUrl } from "../../../services/PostServices";
 function Post({post, onClick}) {
     const [imageUrl, setImageUrl] = useState(null);
     function fetchImageUrl() {
-        console.log(post);
-        const url = getImageUrl(post.imageFilepath);
-        console.log(url);
-        setImageUrl(url);
-            /*.then(url => {
-                console.log(url);
-                setImageUrl(url)
-            })
-            .then(
-                console.log(imageUrl)
-            )*/
+        getImageUrl(post.imageFilepath).then(url => {
+            console.log(url);
+            setImageUrl(url)
+        });
     }
-    useEffect(fetchImageUrl);
+    useEffect(fetchImageUrl, []);
     return (
         <div onClick={() => onClick(post)} className="unclicked-post">
             <div className="image-wrapper">

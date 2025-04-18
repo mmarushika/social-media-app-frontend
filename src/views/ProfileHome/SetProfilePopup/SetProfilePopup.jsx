@@ -24,9 +24,7 @@ function SetProfilePopup({user}) {
             accountPrivacy: currentPrivacy
         }
         addData("http://localhost:8000/new-profile", {profile:profile, settings:settings})
-            .then(
-                () => {if(currentFile) uploadProfileImage(currentFile)}
-            ).then
+        if(currentFile != null) uploadProfileImage(currentFile);
     }
 
     return (

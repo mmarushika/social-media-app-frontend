@@ -4,7 +4,7 @@ import "./CreatePostPopup.css";
 import {Link, useNavigate} from "react-router";
 import {useState} from "react";
 
-function CreatePostPopup({user}) {
+function CreatePostPopup({user, setRefresh}) {
     const navigate = useNavigate();
     const [currentFile, setFile] = useState(null);
     const [currentContent, setContent] = useState(null);
@@ -27,6 +27,8 @@ function CreatePostPopup({user}) {
         addData("http://localhost:8000/post", post)
             .then(
                 uploadPostImage(currentFile)
+            ).then(
+                setRefresh(prev => !prev)
             )
     }
     

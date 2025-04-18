@@ -41,7 +41,7 @@ export async function updateData(url, user, data) {
     });
 }
 
-export function uploadPostImage(file, uploadFolder) {
+export function uploadPostImage(file) {
     console.log(file);
     const formData = new FormData();
     formData.append("file", file, file.name);
@@ -50,7 +50,7 @@ export function uploadPostImage(file, uploadFolder) {
         body: formData
     });
 }
-export function uploadProfileImage(file, uploadFolder) {
+export function uploadProfileImage(file) {
     console.log(file);
     const formData = new FormData();
     formData.append("file", file, file.name);
@@ -61,16 +61,14 @@ export function uploadProfileImage(file, uploadFolder) {
 }
 
 export async function getImageUrl(filepath) {
-    //const filepath = '/Users/marushikamanohar/Programming/Fullstack/mongo-test/images/posts/IMG_5003.jpeg';
-    const res = await fetch(`http://localhost:8000/image?filepath=${filepath}`);
-    console.log(res);
-    const blob = await res.blob();
-    return URL.createObjectURL(blob);
-    console.log(url);
+    console.log(filepath);
     /*const url = fetch(`http://localhost:8000/image?filepath=${filepath}`)
         .then(response => response.blob())
-        .then(blob => URL.createObjectURL(blob))
-        .then(res => console.log(res));*/
+        .then(blob => URL.createObjectURL(blob));
+    console.log(url);*/
+    const res = await fetch(`http://localhost:8000/image?filepath=${filepath}`);
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
     return url;
 }
 

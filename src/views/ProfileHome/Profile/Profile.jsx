@@ -6,40 +6,47 @@ import { getImageUrl, getData, updateData }  from "../../../services/PostService
 import EditProfilePopup from "../EditProfilePopup/EditProfilePopup.jsx";
 
 function Profile({ user, viewer }) {
-    const [imageUrl, setImageUrl] = useState(null);
+    const [imageUrl, setImageUrl] = useState("");
+    const [refresh, setRefresh] = useState(false);
     const [profileStats, setProfileStats] = useState({
         posts: 20,
         following: [1, 2, 3],
         followers: [1, 2, 3]
     });
     const [profile, setProfile] = useState({
-        
+        username : user, 
+        imageFilepath: "",
+        name: "",
+        description: ""
     });
     const [profileEdit, setProfileEdit] = useState(false);
 
     // Declare effects
-    //seEffect(fetchImageUrl, []);
     useEffect(fetchProfile, []);
+    useEffect(() => {
+        fetchImageUrl(profile.imageFilepath)
+    }, [profile]);   
 
-    // Declar fetch functions
-    function fetchImageUrl() {
-        getImageUrl(user.imageFilepath).then(url => {
+    // Declare fetch functions
+    function fetchImageUrl(filepath) {
+        console.log(filepath);
+        getImageUrl(filepath).then(url => {
             console.log(url);
-            setImageUrl(url)
+            setImageUrl(url);
         });
     }
     
     function fetchProfile() {
+        console.log(user);
         getData(`http://localhost:8000/profile?username=${user}`)
-            .then(profile => setProfile(profile));
+            .then(data => setProfile(data))
     }
-
     function editProfile() {
         setProfileEdit(true);
     }
 
-    function close() {
-        if(event.target.className == "transparent-background") {
+    function close(e) {
+        if(e.target.className == "transparent-background") {
             setProfileEdit(false);
         } else {
             updateData(`http://localhost:8000/profile?username=${user}`)
@@ -51,9 +58,13 @@ function Profile({ user, viewer }) {
             .then(fetchProfile());
     }
 
+    const myStyle = {
+        width: "300px",
+        height: "300px"
+    }
     return (
         <div className="profile">
-            {profileEdit ? 
+             {profileEdit ? 
                 <EditProfilePopup currentImageUrl={imageUrl} editProfile={editProfile} close={close}/> : <></>}
             <div className="profile-photo-wrapper">
                 {imageUrl ?
@@ -63,7 +74,7 @@ function Profile({ user, viewer }) {
             </div>
             <div className="profile-info">
                 <div className="profile-header">
-                    <div className="profile-username">{profile.username}</div>
+                    <div className="profile-username">{user}</div>
                     {user === viewer ?
                         <div className="account-owner-buttons">
                             <button className="profile-button" onClick={editProfile}>Edit Profile</button> 
