@@ -19,6 +19,7 @@ export async function getData(url) {
 }
 
 export async function addData(url, data) {
+    console.log(url);
     console.log(data);
     const res = await fetch(url, {
         method: 'POST',
@@ -39,10 +40,20 @@ export async function updateData(url, user, data) {
     });
 }
 
-export function uploadImage(file) {
+export function uploadPostImage(file, uploadFolder) {
+    console.log(file);
     const formData = new FormData();
     formData.append("file", file, file.name);
-    fetch("http://localhost:8000/upload", {
+    fetch(`http://localhost:8000/upload/posts`, {
+        method: 'POST',
+        body: formData
+    });
+}
+export function uploadProfileImage(file, uploadFolder) {
+    console.log(file);
+    const formData = new FormData();
+    formData.append("file", file, file.name);
+    fetch(`http://localhost:8000/upload/profiles`, {
         method: 'POST',
         body: formData
     });

@@ -1,6 +1,6 @@
 import "./ProfileHome.css";
 
-import {getData, addData, uploadImage, getImageUrl} from "../../services/PostServices";
+import {getData} from "../../services/PostServices";
 import {useState, useEffect, useRef} from "react";
 import PostHistory from "./PostHistory/PostHistory";
 import OpenedPost from "./OpenedPost/OpenedPost";
@@ -9,6 +9,7 @@ import SetProfilePopup from "./SetProfilePopup/SetProfilePopup";
 import Profile from "./Profile/Profile";
 
 function ProfileHome({setProfile, user}) {
+    console.log(user, setProfile)
     const [posts, setPosts] = useState([]);
     //const [currentPost, setPost] = useState({likes: 0, comments: [], content:"", imageUrl:""});
     const [clickedPost, setClickedPost] = useState(null);
@@ -53,17 +54,17 @@ function ProfileHome({setProfile, user}) {
     const profile = {
         "username": user,
         "name": "Alice Adams",
-        "imageFilepath": "/Users/marushikamanohar/Programming/Fullstack/social-media-app/social-media-app-backend/images/posts/IMG_5003.jpeg",
+        "imageFilepath": "",
         "description": `I am a tes. I am a test. I am a test.I am a test.I am a 
         test.I am test am a tes. I am a test. I am a test.I am a test.I am a test.I am test`
     } 
     return (
         <div className="view profile-home">
             {setProfile ? 
-                <SetProfilePopup /> : <></>
+                <SetProfilePopup user={user}/> : <></>
             }
             <Profile user={profile} viewer={"balice123"}/>
-            <button onClick={() => setCreatePost(prev => !prev)}>Create Post</button>
+            <button onClick={() => {setCreatePost(prev => !prev); console.log("clicked")}}>Create Post</button>
             {createPost ? 
                 <CreatePostPopup user ={user} close={handleBackgroundClick} />
                 : <></>

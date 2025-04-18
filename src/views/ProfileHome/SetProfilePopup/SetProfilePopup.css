@@ -19,9 +19,10 @@
 }
 
 .profile-description-input {
-    height: 250px;
+    height: 340px;
     resize: none;
     overflow-y: scroll;
+    margin-bottom: 30px;
 }
 
 textarea {
@@ -61,7 +62,6 @@ textarea {
 .profile-file-input-wrapper {
     height: 40px;
     width: 100%;
-    background-color: pink;
 }
 
 .select-image {
@@ -70,8 +70,46 @@ textarea {
     border-radius: 10px;
     margin-left: 20px;
     vertical-align: middle;
-    width: 100px;
-    height: 100%;
+    width: 120px;
+    height: 30px;
+    text-align: center;
+    padding-top: 10px;
     background-color:rgb(130, 128, 128);
     color: white; 
+}
+
+.select-image:hover {
+    background-color: rgb(62, 168, 235);
+}
+
+.settings-popup {
+    position: relative;
+    min-width: 400px;
+    width: 30vw;
+    height: 30vh;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: rgb(52, 49, 49);
+    padding: 50px;
+}
+
+.setup-settings {
+    width: 90%;
+    height: 80%;
+}
+
+.settings-header{
+    width: 100%;
+    color: gray;
+    height: 60px;
+    padding-right: 60%;
+    padding-bottom: 30px;
+    border-bottom: solid gray;
+}
+.privacy-settings {
+    margin-top: 50px;
+}
+
+.privacy-input {
+    margin-right: 75px;
 }

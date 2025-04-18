@@ -1,0 +1,9 @@
+.settings-popup {
+    position: relative;
+    min-width: 400px;
+    width: 40vw;
+    height: 50vh;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: rgb(52, 49, 49);
+}

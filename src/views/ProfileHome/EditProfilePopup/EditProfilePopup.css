@@ -3,12 +3,10 @@
     position: relative;
     min-width: 780px;
     width: 70vw;
-    height: 90vh;
-    border-radius: 0px;
-    padding: 0px;
+    height: 80vh;
+    border-radius: 10px;
+    padding: 20px;
     background-color: rgb(52, 49, 49);
-    display: flex;
-    flex-wrap: wrap;
 }
 
 .profile-image-wrapper {

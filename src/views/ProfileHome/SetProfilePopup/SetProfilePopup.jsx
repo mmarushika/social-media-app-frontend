@@ -1,86 +1,78 @@
 import "./SetProfilePopup.css";
-import "../../../assets/profile-white.png";
-
-import { addData } from "../../../services/PostServices";
+import profilePlaceholder from "../../../assets/profile-white.png";
+import{Link} from "react-router";
+import { addData, uploadProfileImage } from "../../../services/PostServices";
 import {useState} from "react";
 
-function SetProfilePopup({user, finish}) {
+function SetProfilePopup({user}) {
     const [currentFile, setFile] = useState(null);
-    const [currentContent, setContent] = useState(null);
+    const [currentName, setName] = useState(null);
+    const [currentDescription, setDescription] = useState(null);
+    const [currentPrivacy, setPrivacy] = useState(null);
     const [next, setNext] = useState(false);
-    function updateFile(event) {
-        setFile(event.target.files[0]);
-    }
 
-    function updateContent(event) {
-        setContent(event.target.value);
-    }
-
-    const [profile , setProfile] = useState({
-        username : user,
-        name : "",
-        imageFilepath: "",
-        description: ""
-    });
-
-    function setupProfile() {
-            post.author = user;
-            addData("http://localhost:8000/post", post)
-                .then(
-                    uploadImage(file)
-                ).then(
-                    fetchPosts()
-                ).then(
-                    setCreatePost(null)
-                )
+    function finish() {
+        const profile = {
+            username : user,
+            name : currentName,
+            imageFilepath: `${currentFile ? currentFile.name : ""}`,
+            description: currentDescription
         }
-    function updateFile(event) {
-        setFile(event.target.files[0]);
-    }
-
-    function updateContent(event) {
-        setContent(event.target.value);
-    }
-
-    function initPost() {
-        return {
-            username : "",
-            name : "",
-            imageFilepath: "",
-            description: ""
+        
+        const settings = {
+            username : user,
+            accountPrivacy: currentPrivacy
         }
+        addData("http://localhost:8000/new-profile", {profile:profile, settings:settings})
+            .then(
+                () => {if(currentFile) uploadProfileImage(currentFile)}
+            ).then
     }
+
     return (
         <div className="transparent-background">
             {next ? 
-                <div className="create-post-popup">
+                <div className="settings-popup">
                     <div className="setup-settings">
-                        <label>Private</label>
-                        <input name="account-privacy" type="radio" value="Private"></input>
-                        <label>Public</label>
-                        <input name="account-privacy" type="radio" value="Public"></input>
+                        <label className="settings-header">Account Privacy</label>
+                        <div className="privacy-settings">
+                            <span className="privacy-input">
+                                <label className="radio-input">Private</label>
+                                <input name="account-privacy" type="radio" value="Private"
+                                    onChange={(e) => setPrivacy(e.target.value)}></input>
+                            </span>
+                            <span className="privacy-input">
+                                <label>Public</label>
+                                <input name="account-privacy" type="radio" value="Public"
+                                    onChange={(e) => setPrivacy(e.target.value)}></input>
+                            </span>
+                        </div>
                     </div>
-                    <button className="profile-button right" onClick={() => setNext(false)}>Back</button>
-                    <button className="profile-button right" onClick={finish}>Finish</button>
+                    <div className="right">
+                        <button className="profile-button" onClick={() => setNext(false)}>Back</button>
+                        <Link to="/user"><button className="profile-button" onClick={finish}>Finish</button></Link>
+                    </div>
                 </div>
                 :
-                <div className="create-post-popup">
+                <div className="edit-profile-popup">
                     <div className="profile-image-input-wrapper">
                         <div className="circle-wrapper"> 
-                        <img src="src/assets/profile-white.png"></img>
                             {currentFile ?
                                 <img className="opened-post-image circle" src={URL.createObjectURL(currentFile)}></img> 
-                                : <img className="circle" src="src/assets/profile-black.png"></img>}  
-                        </div> 
+                                : <img className="circle" src={profilePlaceholder}></img>}  
+                        </div>   
                         <div className="profile-file-input-wrapper">
-                            <div className="profile-input select-image right">Select Image
-                                <input onChange={updateFile} type="file" hidden accept=".jpg, .jpeg, .png"></input>
-                            </div>
+                            <label className="select-image right">Select Image
+                                <input type="file" hidden accept=".jpg, .jpeg, .png"
+                                    onChange={(e) => setFile(e.target.files[0])}></input>
+                            </label>
                         </div>
                     </div>
                     <div className="profile-input-wrapper">
-                        <input className="profile-input" placeholder="Name"></input>
-                        <textarea className="profile-input profile-description-input" placeholder="Description" onChange={updateContent}></textarea>
+                        <input className="profile-input" placeholder="Name"
+                            onChange={(e) => setName(e.target.value)}></input>
+                        <textarea className="profile-input profile-description-input" placeholder="Description" 
+                            onChange={(e) => setDescription(e.target.value)}></textarea>
                     </div>
                     <button className="profile-button right" onClick={() => setNext(true)}>Next</button>
                 </div>                

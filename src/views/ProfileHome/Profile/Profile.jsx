@@ -1,4 +1,6 @@
 import "./Profile.css";
+import profilePlaceholder from "../../../assets/profile-white.png";
+import settings from "../../../assets/white-settings.png";
 import { useState, useEffect } from "react";
 import { getImageUrl, getData, updateData }  from "../../../services/PostServices";
 import EditProfilePopup from "../EditProfilePopup/EditProfilePopup.jsx";
@@ -16,7 +18,7 @@ function Profile({ user, viewer }) {
     const [profileEdit, setProfileEdit] = useState(false);
 
     // Declare effects
-    useEffect(fetchImageUrl, []);
+    //seEffect(fetchImageUrl, []);
     useEffect(fetchProfile, []);
 
     // Declar fetch functions
@@ -40,7 +42,7 @@ function Profile({ user, viewer }) {
         if(event.target.className == "transparent-background") {
             setProfileEdit(false);
         } else {
-            updateData(`http://localhost:8000/edit-profile?username=${user}`)
+            updateData(`http://localhost:8000/profile?username=${user}`)
                 .then(fetchProfile());
         }
     }
@@ -54,9 +56,9 @@ function Profile({ user, viewer }) {
             {profileEdit ? 
                 <EditProfilePopup currentImageUrl={imageUrl} editProfile={editProfile} close={close}/> : <></>}
             <div className="profile-photo-wrapper">
-                {imageUrl !== "" ?
+                {imageUrl ?
                     <img className="profile-photo" src={imageUrl}></img> :
-                    <img className="profile-photo" src="src/assets/profile-white.png"></img>
+                    <img className="profile-photo" src={profilePlaceholder}></img>
                 }
             </div>
             <div className="profile-info">
@@ -66,7 +68,7 @@ function Profile({ user, viewer }) {
                         <div className="account-owner-buttons">
                             <button className="profile-button" onClick={editProfile}>Edit Profile</button> 
                             <div className="settings-button-wrapper">
-                                <img className="settings-button" src="src/assets/white-settings.png"></img>
+                                <img className="settings-button" src={settings}></img>
                             </div>
                         </div>
                         : <button className="profile-button" onClick={follow}>Follow</button> }

@@ -17,7 +17,7 @@ const PrivateRoute = ({ isAuthenticated, view }) => {
 
 
 function App() {
-  const [user, setUser] = useState({ isAuthenticated: true, username: null });
+  const [user, setUser] = useState({ isAuthenticated: false, username: null });
   const navigate = useNavigate();
   function authenticate(username, password) {
     getData(`http://localhost:8000/auth?username=${username}&password=${password}`)

@@ -1,3 +1,4 @@
+import { uploadPostImage } from "../../../services/PostServices";
 import "./CreatePostPopup.css";
 
 import {useState} from "react";
@@ -24,7 +25,7 @@ function CreatePostPopup({user, close}) {
         }
         addData("http://localhost:8000/post", post)
             .then(
-                uploadImage(currentFile)
+                uploadPostImage(currentFile)
             ).then(
                 fetchPosts()
             ).then(
