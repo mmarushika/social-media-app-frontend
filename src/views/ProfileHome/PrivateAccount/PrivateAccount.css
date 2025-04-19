@@ -1,0 +1,24 @@
+.private-account {
+    width: 76%; /*1020px*/
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.private-account-header {
+    font-size: 2em;
+    color: gray;
+    font-weight: bold;
+    height: 50px;
+}
+.lock-wrapper {
+    width: 40%;
+    height: 50%;
+}
+
+.contain-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}

@@ -8,12 +8,18 @@ import OpenedPost from "./OpenedPost/OpenedPost";
 import CreatePostPopup from "./CreatePostPopup/CreatePostPopup";
 import SetProfilePopup from "./SetProfilePopup/SetProfilePopup";
 import Profile from "./Profile/Profile";
+import PrivateAccount from "./PrivateAccount/PrivateAccount";
+import FollowPopup from "./FollowPopup/FollowPopup";
 
-function ProfileHome({user, viewer, createPost, setProfile}) {
+function ProfileHome({user, viewer, createPost, setProfile, viewFollowers, viewFollowing}) {
     const [posts, setPosts] = useState([]);
+    const [followers, setFollowers] = useState([]);
+    const [following, setFollowing] = useState([]);
     const [clickedPost, setClickedPost] = useState(null);
     const [update, setUpdate] = useState(0);
     const [profileSettings, setProfileSettings] = useState({accountPrivacy: ""});
+    const [profileStats, setProfileStats] = useState({posts: 0, following: 0, followers: 0});
+
     // forces update on data update
     // https://stackoverflow.com/questions/30626030/can-you-force-a-react-component-to-rerender-without-calling-setstate
     const location = useLocation();
@@ -21,15 +27,31 @@ function ProfileHome({user, viewer, createPost, setProfile}) {
     // https://stackoverflow.com/questions/64566405/react-router-dom-v6-usenavigate-passing-value-to-another-component
 
     useEffect(() => {
+        setProfileStats({posts: posts.length, following: following.length, followers: followers.length})
+    }, [posts, followers, following, update, location.pathname]);
+    useEffect(() => {
         async function fetchPosts() {
             const data = await getData(`http://localhost:8000/posts?username=${user}`)
             setPosts([...data.reverse()]);
         }
         async function fetchSettings() {
-            const data = await getData(`http://localhost:8000/posts?username=${user}`)
-            setProfileSettings([...data]);
+            const data = await getData(`http://localhost:8000/profile/settings?username=${user}`)
+            setProfileSettings(data);
         }
-        fetchPosts();
+        async function fetchFollowers() {
+            const data = await getData(`http://localhost:8000/followers?username=${user}`);
+            console.log(data);
+            setFollowers([...data]);
+        }
+        async function fetchFollowing() {
+            const data = await getData(`http://localhost:8000/following?username=${user}`);
+            console.log(data);
+            setFollowing([...data]);
+        }
+        fetchSettings();
+        fetchPosts()
+        fetchFollowers()
+        fetchFollowing()
     }, [update, location.pathname]);
     
     // Set follow status
@@ -40,26 +62,24 @@ function ProfileHome({user, viewer, createPost, setProfile}) {
             .then(data => setFollowStatus(data.status))
             .then(console.log(followStatus));
     }
+    // https://stackoverflow.com/questions/53472795/uncaught-error-rendered-fewer-hooks-than-expected-this-may-be-caused-by-an-acc
+    useEffect(fetchFollowStatus, [update, location.pathname]);
 
-    if(user !== viewer) {
-        useEffect(fetchFollowStatus, [location.pathname]);
-    }
-    
     // Follow Handlers
     function requestFollow() {
         const request = {account : user, requester: viewer}
         addData(`http://localhost:8000/follow/request`, request)
-            .then(fetchFollowStatus());
+        setUpdate(x => x + 1);
     }
     function cancelRequest() {
         const request = {account : user, requester: viewer}
         updateData(`http://localhost:8000/follow/request/cancel`, request)
-            .then(fetchFollowStatus());
+        setUpdate(x => x + 1);
     }
     function cancelFollow() {
         const follow = {account : user, follower: viewer}
         updateData(`http://localhost:8000/follow/cancel`, follow)
-            .then(fetchFollowStatus());
+        setUpdate(x => x + 1);
     }
     function getFollowHandler() {
         if(followStatus == "Follow") {
@@ -69,6 +89,9 @@ function ProfileHome({user, viewer, createPost, setProfile}) {
         } else if(followStatus == "Unfollow") {
             return cancelFollow;
         } 
+    }
+    function isFollower() {
+        return followers.find((i) => (i == viewer)) != undefined;
     }
 
     function clickBackground(event) {
@@ -84,15 +107,18 @@ function ProfileHome({user, viewer, createPost, setProfile}) {
             setClickedPost(null);
         }
     }
-
+    //console.log(profileSettings, user, viewer);
     return (
         <div className="view profile-home">
             {setProfile ? 
                 <SetProfilePopup user={user} setUpdate={setUpdate}/> 
                 : 
                 <>
-                    <Profile user={user} viewer={viewer} followStatus={followStatus} followHandler={getFollowHandler()}/>
-                    <PostHistory posts={posts} clickPost={clickPost}/>
+                    <Profile user={user} viewer={viewer} followStatus={followStatus} 
+                        followHandler={getFollowHandler()} profileStats={profileStats}/>
+                    {(profileSettings.accountPrivacy != "Private" || user == viewer || isFollower()) ?
+                        <PostHistory posts={posts} clickPost={clickPost}/>
+                    : <PrivateAccount/>}
                 </>
 
             }
@@ -100,6 +126,12 @@ function ProfileHome({user, viewer, createPost, setProfile}) {
                 <CreatePostPopup user ={user} setUpdate={setUpdate}/> : <></>
             }  
             {clickedPost ? <OpenedPost post={clickedPost} onClick={clickBackground}/> : <></> }
+            {viewFollowers ?
+                <FollowPopup user={user} mode="Followers" list={followers}/> : <></>
+            }
+            {viewFollowing ?
+                <FollowPopup user={user} mode="Following" list={following}/> : <></>
+            }
         </div>
     );
 }

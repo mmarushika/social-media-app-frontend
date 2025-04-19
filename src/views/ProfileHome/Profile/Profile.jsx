@@ -1,18 +1,16 @@
 import "./Profile.css";
 import profilePlaceholder from "../../../assets/profile-white.png";
 import settings from "../../../assets/white-settings.png";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { useState, useEffect } from "react";
 import { getImageUrl, getData, updateData, addData }  from "../../../services/PostServices";
 import EditProfilePopup from "../EditProfilePopup/EditProfilePopup.jsx";
 
-function Profile({user, viewer, followStatus, followHandler}) {
+function Profile({user, viewer, profileStats, followStatus, followHandler}) {
+    console.log(user, viewer);
+    console.log(profileStats);
+    const navigate = useNavigate();
     const [imageUrl, setImageUrl] = useState("");
-    const [profileStats, setProfileStats] = useState({
-        posts: 20,
-        following: [1, 2, 3],
-        followers: [1, 2, 3]
-    });
     const [profile, setProfile] = useState({
         username : user, 
         imageFilepath: "",
@@ -25,12 +23,12 @@ function Profile({user, viewer, followStatus, followHandler}) {
     const location = useLocation();
 
     // Declare effects
-    useEffect(() => {
+    /*useEffect(() => {
         async function fetchProfileStats() {
             getData(`http://localhost:8000/profile/stats?username=${user}`)
             .then(data => setProfileStats(data))
         }
-    })
+    })*/
     useEffect(() => {
         function fetchProfile() {
             console.log(user);
@@ -56,9 +54,6 @@ function Profile({user, viewer, followStatus, followHandler}) {
     function close(e) {
         if(e.target.className == "transparent-background") {
             setProfileEdit(false);
-        } else {
-            updateData(`http://localhost:8000/profile?username=${user}`)
-                .then(fetchProfile());
         }
     }
     return (
@@ -87,8 +82,10 @@ function Profile({user, viewer, followStatus, followHandler}) {
                 </div>
                 <div className="profile-stats">
                     <span className="profile-stats-field">Posts <b className="white"> {profileStats.posts}</b></span>
-                    <span className="profile-stats-field">Followers <b className="white"> {profileStats.followers.length}</b></span>
-                    <span className="profile-stats-field">Following <b className="white"> {profileStats.following.length}</b></span>
+                    <span className="profile-stats-field" onClick={() => navigate("/"+user+"/followers")}>
+                        Followers <b className="white" > {profileStats.followers}</b></span>
+                    <span className="profile-stats-field" onClick={() => navigate("/"+user+"/following")}>
+                        Following <b className="white"> {profileStats.following}</b></span>
                 </div>
                 <b>{profile.name}</b>
                 <div className="profile-content">

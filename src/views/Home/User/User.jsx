@@ -4,11 +4,22 @@ import {useNavigate} from "react-router";
 import {useState, useEffect} from "react";
 import { getImageUrl, getData } from "../../../services/PostServices";
 
-function User({isCurrentUser, username, mode, acceptHandler, rejectHandler}) {
+function User({currentUser, username, mode, acceptHandler, rejectHandler}) {
     const navigate = useNavigate();
     const [imageUrl, setImageUrl] = useState("");
     const [profile, setProfile] = useState({name: "", imageFilepath: ""});
-    const location = isCurrentUser ? `/${username}` : `/${username}/view`;
+    const location = getLocation();
+
+    // Security breach code :/
+    function getLocation() {
+        if(mode != "explore") {
+            return "/home";
+        } else if(currentUser == username) {
+            return "/" + username;
+        } else {
+            return "/" + username + "/view";
+        }
+    }
     console.log(mode);
     // Declare effects
     // Fetch and set profile to get profile image
@@ -45,8 +56,8 @@ function User({isCurrentUser, username, mode, acceptHandler, rejectHandler}) {
                 </div>
                 {mode == "requests" ?
                     <div>
-                        <button className="profile-button" onClick={acceptHandler}>Accept</button>
-                        <button className="profile-button" onClick={rejectHandler}>Reject</button>
+                        <button className="profile-button" onClick={() => acceptHandler(currentUser, username)}>Accept</button>
+                        <button className="profile-button" onClick={() => rejectHandler(currentUser, username)}>Reject</button>
                     </div> : <></>
                 }
             </div>

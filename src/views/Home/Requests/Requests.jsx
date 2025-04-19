@@ -3,7 +3,7 @@ import refresh from "../../../assets/refresh.png";
 
 import {useState, useEffect} from "react";
 import {useLocation} from "react-router";
-import { getData } from "../../../services/PostServices";
+import { updateData, getData } from "../../../services/PostServices";
 import User from "../User/User";
 
 function Requests({user}) {
@@ -14,21 +14,20 @@ function Requests({user}) {
     useEffect(() => {
         async function fetchRequests() {
             const data = await getData(`http://localhost:8000/follow/requests?username=${user}`);
-            console.log(data);
-            setRequests([...data.filter((i) => i != user)]);
+            setRequests([...data]);
         }
         fetchRequests();
     }, [location.pathname, update]);
 
-    function acceptRequest() {
-            const request = {account : user, requester: viewer}
-            addData(`http://localhost:8000/follow/request/accept`, request)
-                .then(fetchFollowStatus());
+    function acceptRequest(account, requester) {
+            const request = {account : account, requester: requester}
+            updateData(`http://localhost:8000/follow/request/accept`, request)
+            setUpdate(x => x + 1);
         }
-        function cancelRequest() {
-            const request = {account : user, requester: viewer}
+        function cancelRequest(account, requester) {
+            const request = {account : account, requester: requester}
             updateData(`http://localhost:8000/follow/request/cancel`, request)
-                .then(fetchFollowStatus());
+            setUpdate(x => x + 1);
         }
 
     return (
@@ -44,7 +43,7 @@ function Requests({user}) {
                     </div>
                 </div>
                 <div className="scroll-y">
-                    {requests.map(i => <User key={i} isCurrentUser={false} username={i} 
+                    {requests.map(i => <User key={i} currentUser={user} username={i} 
                         mode={"requests"} acceptHandler={acceptRequest} cancelRequest={cancelRequest}/>)}
                 </div>
             </div>
