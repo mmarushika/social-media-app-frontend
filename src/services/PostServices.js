@@ -31,7 +31,8 @@ export async function addData(url, data) {
     });
 }
 
-export async function updateData(url, user, data) {
+export async function updateData(url, data) {
+    console.log(data);
     const res = await fetch(url, {
         method: 'POST',
         headers: {

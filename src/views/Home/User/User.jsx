@@ -1,45 +1,54 @@
 import "./User.css";
 import profilePlaceholder from "../../../assets/profile-white.png";
-import {Link, useNavigate} from "react-router";
+import {useNavigate} from "react-router";
 import {useState, useEffect} from "react";
 import { getImageUrl, getData } from "../../../services/PostServices";
 
-function User({isCurrentUser, username}) {
+function User({isCurrentUser, username, mode, acceptHandler, rejectHandler}) {
     const navigate = useNavigate();
     const [imageUrl, setImageUrl] = useState("");
     const [profile, setProfile] = useState({name: "", imageFilepath: ""});
     const location = isCurrentUser ? `/${username}` : `/${username}/view`;
+    console.log(mode);
     // Declare effects
-    useEffect(fetchProfile, []);
+    // Fetch and set profile to get profile image
     useEffect(() => {
-        if(profile.imageFilepath != "") fetchImageUrl(profile.imageFilepath)
-    }, [profile]);   
+        function fetchProfile() {
+            getData(`http://localhost:8000/profile?username=${username}`)
+                .then(data => setProfile(data))
+        }
+        fetchProfile();
+    }, [location.pathname]);
+    // Fetch and set profile image
+    useEffect(() => {
+        function fetchImageUrl(filepath) {
+            getImageUrl(filepath).then(url => {
+                setImageUrl(url);
+            });
+        }
+        if(profile.imageFilepath != ""){
+            fetchImageUrl(profile.imageFilepath);
+        } 
+    }, [profile, location.pathname]);   
 
-    // Declare fetch functions
-    function fetchImageUrl(filepath) {
-        console.log(filepath);
-        getImageUrl(filepath).then(url => {
-            console.log(url);
-            setImageUrl(url);
-        });
-    }
-    
-    function fetchProfile() {
-        getData(`http://localhost:8000/profile?username=${username}`)
-            .then(data => setProfile(data))
-    }
     return (
-            <div className="user-button" onClick={() => navigate(location)}>
-                <div className="user-button-profile-wrapper">
+            <div className={mode+"-user-button"} onClick={() => navigate(location)}>
+                <div className={"user-button-profile-wrapper"}>
                     {imageUrl ?
                         <img className="profile-photo" src={imageUrl}></img> :
                         <img className="profile-photo" src={profilePlaceholder}></img>
                     }
                 </div>
-                <div className="user-button-info-wrapper">
+                <div className={"user-button-info-wrapper"}>
                     <div className="white"><b>{username}</b></div>
                     <div className="gray">{profile.name}</div>
                 </div>
+                {mode == "requests" ?
+                    <div>
+                        <button className="profile-button" onClick={acceptHandler}>Accept</button>
+                        <button className="profile-button" onClick={rejectHandler}>Reject</button>
+                    </div> : <></>
+                }
             </div>
         
     )

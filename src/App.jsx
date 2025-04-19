@@ -49,7 +49,7 @@ function App() {
     }
     addData(`http://localhost:8000/signup`, user)
         .then(setUser({isAuthenticated: true, username: user.username}))
-        .then(navigate("/user/account"));
+        .then(navigate("/" + user.username + "/account"));
   }
 
   return (
@@ -66,24 +66,24 @@ function App() {
             view={<DirectMessage sender={user.username} />} />}></Route>
 
         {users.map(username => 
-        <Route path={username}
+        <Route path={"/" + username}
           element={<PrivateRoute isAuthenticated={user.isAuthenticated} 
-            view={<ProfileHome user={username} viewer={false} createPost={false} setProfile={false} />} />}></Route>
+            view={<ProfileHome user={username} viewer={user.username} createPost={false} setProfile={false}/>} />}></Route>
         )}
         {users.map(username => 
         <Route path={"/" + username + "/view"}
           element={<PrivateRoute isAuthenticated={user.isAuthenticated} 
-            view={<ProfileHome user={username} viewer={true} createPost={false} setProfile={false}/>}/>}></Route>
+            view={<ProfileHome user={username} viewer={user.username} createPost={false} setProfile={false}/>}/>}></Route>
         )}
         {users.map(username => 
         <Route path={"/" + username + "/account"}
           element={<PrivateRoute isAuthenticated={user.isAuthenticated} 
-            view={<ProfileHome user={username} viewer={false} createPost={false} setProfile={true} />} />}></Route>
+            view={<ProfileHome user={username} viewer={user.username} createPost={false} setProfile={true} />} />}></Route>
         )}
         {users.map(username => 
         <Route path={"/" + username + "/create"}
           element={<PrivateRoute isAuthenticated={user.isAuthenticated} 
-            view={<ProfileHome user={user.username} viewer={false} createPost={true} setProfile={false} />} />}></Route>
+            view={<ProfileHome user={user.username} viewer={user.username} createPost={true} setProfile={false} />} />}></Route>
         )}
         </Routes>
     </div>

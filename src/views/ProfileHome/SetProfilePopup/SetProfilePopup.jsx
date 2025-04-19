@@ -23,7 +23,7 @@ function SetProfilePopup({user, setUpdate}) {
             username : user,
             accountPrivacy: currentPrivacy
         }
-        addData("http://localhost:8000/new-profile", {profile:profile, settings:settings})
+        addData("http://localhost:8000/profile/new", {profile:profile, settings:settings})
         if(currentFile != null) uploadProfileImage(currentFile);
         setUpdate(x => x + 1);
     }
@@ -49,7 +49,7 @@ function SetProfilePopup({user, setUpdate}) {
                     </div>
                     <div className="right">
                         <button className="profile-button" onClick={() => setNext(false)}>Back</button>
-                        <Link to="/user"><button className="profile-button" onClick={finish}>Finish</button></Link>
+                        <Link to={"/" + user}><button className="profile-button" onClick={finish}>Finish</button></Link>
                     </div>
                 </div>
                 :

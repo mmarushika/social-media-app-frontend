@@ -1,0 +1,15 @@
+.follow-button {
+    font-size: 1em;
+    border: none;
+    border-radius: 10px;
+    margin-left: 20px;
+    vertical-align: middle;
+    width: 100px;
+    height: 40px;
+    background-color:rgb(130, 128, 128);
+    color: white;
+}
+
+.follow-button :hover {
+    background-color: rgb(62, 168, 235);
+}

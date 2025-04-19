@@ -1,6 +1,7 @@
 import "./NavBar.css";
 
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import {useState} from "react";
 
 import home from "../../assets/home-white.png";
 import profile from "../../assets/profile-white.png";
@@ -8,6 +9,7 @@ import create from "../../assets/create-white.png";
 import message from "../../assets/white-message.png";
 
 function NavBar({user}) {
+    const [currentUser, setCurrentUser] = useState(user);
     return (
         <div className="nav-bar">
             <div className="nav-bar-wrapper">

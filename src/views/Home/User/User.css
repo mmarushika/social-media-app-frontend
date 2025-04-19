@@ -1,11 +1,18 @@
-.user-button {
+.explore-user-button {
     width: 250px;
     height: 70px;
     display: flex;
     align-items: center;
 }
 
-.user-button:hover {
+.requests-user-button {
+    width: 500px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+}
+
+.explore-user-button:hover {
     background-color: rgb(62, 168, 235);
     border-radius: 10px;
     padding: 2px;
@@ -25,6 +32,7 @@
 
 .user-button-info-wrapper {
     margin-left: 30px;
+    line-height: 25px;
 }
 div {
     text-decoration: none;

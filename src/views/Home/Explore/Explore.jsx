@@ -19,11 +19,11 @@ function Explore({user}) {
         <div className="explore">
             <div className="explore-wrapper">
                 <div className="explore-current-user-wrapper">
-                    <User isCurrentUser={true}username={user}></User>
+                    <User isCurrentUser={true} username={user} mode={"explore"}></User>
                 </div>
                 <div className="explore-header">Explore</div>
                 <div className="scroll-y">
-                    {users.map(i => <User key={i} username={i}/>)}
+                    {users.map(i => <User key={i} isCurrentUser={false} username={i} mode={"explore"}/>)}
                 </div>
             </div>
         </div>

@@ -17,6 +17,7 @@ function CreatePostPopup({ user, setUpdate }) {
             comments: 0,
             likes: 0,
             imageFilepath: currentFile.name,
+            timestamp : JSON.stringify(new Date)
         }
         addData("http://localhost:8000/post", post)
             .then(
@@ -48,7 +49,7 @@ function CreatePostPopup({ user, setUpdate }) {
                     <textarea className="post-input post-message-input" placeholder="Add a message"
                         onChange={(e) => setContent(e.target.value)}></textarea>
                 </div>
-                <Link to="/user"><button className="profile-button right" onClick={makePost}>Post</button></Link>
+                <Link to={"/" + user}><button className="profile-button right" onClick={makePost}>Post</button></Link>
             </div>
         </div>
     );

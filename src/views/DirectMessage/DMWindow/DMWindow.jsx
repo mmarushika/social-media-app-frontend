@@ -19,7 +19,7 @@ function DMWindow({sender, receiver}) {
   }
   useEffect(fetchMessages, [receiver]);
 
-  async function handleSend(content) {
+  async function send(content) {
     const message = {
       sender : sender,
       receiver : receiver,
@@ -34,7 +34,7 @@ function DMWindow({sender, receiver}) {
         <div className="dm-window">
             <DMHeader name={receiver} />
             <DMHistory messages={messages} sender={sender}/>
-            <MessageBar onClick={handleSend}/>
+            <MessageBar onClick={send}/>
         </div>
     )
 }

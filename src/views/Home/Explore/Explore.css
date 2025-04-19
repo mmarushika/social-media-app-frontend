@@ -1,7 +1,8 @@
 .explore {
     width: 350px;
     height: 100vh;
-    border-right: solid gray;
+    /*border-right: solid gray;*/
+    float: right;
 }
 
 
