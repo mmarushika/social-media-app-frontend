@@ -16,7 +16,7 @@ function OpenedPost({ post, onClick }) {
     return (
         <div className="transparent-background" onClick={onClick}>
             <div className="opened-post">
-                <div className="image-wrapper">
+                <div className="opened-post-image-wrapper">
                     <img className="opened-post-image" src={imageUrl}></img>
                 </div>
                 <div className="comment-section">

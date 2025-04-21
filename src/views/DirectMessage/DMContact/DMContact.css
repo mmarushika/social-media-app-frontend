@@ -1,4 +1,7 @@
 .dm-contact {
-    height: 30px;
-    margin: 20px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
 }
+

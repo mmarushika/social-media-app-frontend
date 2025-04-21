@@ -12,6 +12,13 @@
     align-items: center;
 }
 
+.requested-user-button {
+    width: 400px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+}
+
 .explore-user-button:hover {
     background-color: rgb(62, 168, 235);
     border-radius: 10px;

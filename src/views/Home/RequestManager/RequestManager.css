@@ -1,15 +1,19 @@
-.requests {
+.request-manager {
     width: 350px;
     height: 100vh;
     float: left;
 }
 
-.refresh-header {
+.request-header {
     font-weight: bold;
     color: gray;
     height: 30px;
     width: 150px;
     display: flex;
+}
+
+.request-list {
+    height: 35vh;
 }
 .refresh-wrapper {
     margin-left: 10px;
@@ -17,14 +21,34 @@
     width: 25px;
 }
 
-.refresh-image {
+.refresh-image, .empty-box-image {
     height: 100%;
     width: 100%;
     object-fit: contain;
+}
+
+.refresh-image {
     transform: rotate(180deg);
+}
+
+
+.refresh-wrapper {
+    margin-left: 10px;
+    height: 25px;
+    width: 25px;
+}
+
+.empty-box-wrapper {
+    width: 50%;
+    height: 100px;
 }
 
 .refresh-wrapper:hover {
     width: 30px;
     height: 30px;
+}
+
+.flex-inline {
+    display: flex;
+    align-items: center;
 }

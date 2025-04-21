@@ -1,12 +1,12 @@
 import "./Home.css";
 
 import Explore from "./Explore/Explore";
-import Requests from "./Requests/Requests";
+import RequestManager from "./RequestManager/RequestManager";
 
 function Home({user}) {
     return (
         <div className="view home">
-            <Requests user={user} />
+            <RequestManager user={user} />
             <Explore user={user} />
         </div>
     )

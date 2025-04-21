@@ -4,6 +4,7 @@
     width: 100px;
     height: 100vh;
     border-right: solid gray;
+    border-width: 0.5px;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;

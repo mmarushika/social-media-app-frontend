@@ -1,15 +1,16 @@
 import "./User.css";
-import profilePlaceholder from "../../../assets/profile-white.png";
+import profilePlaceholder from "../../assets/profile-white.png";
 import {useNavigate} from "react-router";
 import {useState, useEffect} from "react";
-import { getImageUrl, getData } from "../../../services/PostServices";
+import { getImageUrl, getData } from "../../services/PostServices";
 
-function User({currentUser, username, mode, acceptHandler, rejectHandler}) {
+function User({currentUser, username, mode, acceptRequest, cancelRequest}) {
     const navigate = useNavigate();
     const [imageUrl, setImageUrl] = useState("");
     const [profile, setProfile] = useState({name: "", imageFilepath: ""});
     const location = getLocation();
 
+    console.log(profile);
     // Security breach code :/
     function getLocation() {
         if(mode != "explore") {
@@ -37,6 +38,10 @@ function User({currentUser, username, mode, acceptHandler, rejectHandler}) {
                 setImageUrl(url);
             });
         }
+        if(profile == null) {
+            console.log(profile);
+            return;
+        }
         if(profile.imageFilepath != ""){
             fetchImageUrl(profile.imageFilepath);
         } 
@@ -56,10 +61,13 @@ function User({currentUser, username, mode, acceptHandler, rejectHandler}) {
                 </div>
                 {mode == "requests" ?
                     <div>
-                        <button className="profile-button" onClick={() => acceptHandler(currentUser, username)}>Accept</button>
-                        <button className="profile-button" onClick={() => rejectHandler(currentUser, username)}>Reject</button>
-                    </div> : <></>
-                }
+                        <button className="profile-button" onClick={() => acceptRequest(currentUser, username)}>Accept</button>
+                        <button className="profile-button" onClick={() => cancelRequest(currentUser, username)}>Reject</button>
+                    </div> 
+                    :
+                    mode == "requested" ? 
+                    <button className="profile-button" onClick={() => cancelRequest(currentUser, username)}>Cancel</button> 
+                    : <></>}
             </div>
         
     )

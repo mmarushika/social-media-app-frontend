@@ -32,21 +32,28 @@ function ProfileHome({user, viewer, createPost, setProfile, viewFollowers, viewF
     useEffect(() => {
         async function fetchPosts() {
             const data = await getData(`http://localhost:8000/posts?username=${user}`)
-            setPosts([...data.reverse()]);
+            if(data != null) {
+                setPosts([...data.reverse()]);
+            }
         }
         async function fetchSettings() {
             const data = await getData(`http://localhost:8000/profile/settings?username=${user}`)
-            setProfileSettings(data);
+            if(data != null) {
+                setProfileSettings(data);
+            }
         }
         async function fetchFollowers() {
             const data = await getData(`http://localhost:8000/followers?username=${user}`);
-            console.log(data);
-            setFollowers([...data]);
+            if(data != null) {
+                setFollowers([...data]);
+            }
         }
         async function fetchFollowing() {
             const data = await getData(`http://localhost:8000/following?username=${user}`);
             console.log(data);
-            setFollowing([...data]);
+            if(data != null) {
+                setFollowing([...data]);
+            }
         }
         fetchSettings();
         fetchPosts()
@@ -115,7 +122,7 @@ function ProfileHome({user, viewer, createPost, setProfile, viewFollowers, viewF
                 : 
                 <>
                     <Profile user={user} viewer={viewer} followStatus={followStatus} 
-                        followHandler={getFollowHandler()} profileStats={profileStats}/>
+                        followHandler={getFollowHandler()} profileStats={profileStats} setUpdate={setUpdate}/>
                     {(profileSettings.accountPrivacy != "Private" || user == viewer || isFollower()) ?
                         <PostHistory posts={posts} clickPost={clickPost}/>
                     : <PrivateAccount/>}

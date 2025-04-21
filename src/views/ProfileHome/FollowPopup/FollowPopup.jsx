@@ -1,5 +1,5 @@
 import "./FollowPopup.css";
-import User from "../../Home/User/User";
+import User from "../../../components/User/User";
 import {useState, useEffect} from "react";
 import {useLocation, useNavigate} from "react-router";
 import { getData } from "../../../services/PostServices";

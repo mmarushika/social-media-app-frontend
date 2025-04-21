@@ -23,6 +23,8 @@ function SetProfilePopup({user, setUpdate}) {
             username : user,
             accountPrivacy: currentPrivacy
         }
+
+        console.log(profile, settings);
         addData("http://localhost:8000/profile/new", {profile:profile, settings:settings})
         if(currentFile != null) uploadProfileImage(currentFile);
         setUpdate(x => x + 1);

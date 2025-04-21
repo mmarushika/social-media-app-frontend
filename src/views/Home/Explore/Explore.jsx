@@ -1,7 +1,7 @@
 import "./Explore.css";
 import {useState, useEffect} from "react";
 import { getData } from "../../../services/PostServices";
-import User from "../User/User";
+import User from "../../../components/User/User";
 
 function Explore({user}) {
     const [users, setUsers] = useState([]);

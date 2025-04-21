@@ -1,18 +1,19 @@
 import "./Profile.css";
 import profilePlaceholder from "../../../assets/profile-white.png";
 import settings from "../../../assets/white-settings.png";
+import refresh from "../../../assets/refresh.png";
 import { useLocation, useNavigate } from "react-router";
 import { useState, useEffect } from "react";
-import { getImageUrl, getData, updateData, addData }  from "../../../services/PostServices";
+import { getImageUrl, getData, updateData, addData } from "../../../services/PostServices";
 import EditProfilePopup from "../EditProfilePopup/EditProfilePopup.jsx";
 
-function Profile({user, viewer, profileStats, followStatus, followHandler}) {
+function Profile({ user, viewer, profileStats, followStatus, followHandler, setUpdate}) {
     console.log(user, viewer);
     console.log(profileStats);
     const navigate = useNavigate();
     const [imageUrl, setImageUrl] = useState("");
     const [profile, setProfile] = useState({
-        username : user, 
+        username: user,
         imageFilepath: "",
         name: "",
         description: ""
@@ -43,23 +44,23 @@ function Profile({user, viewer, profileStats, followStatus, followHandler}) {
                 setImageUrl(url);
             });
         }
-        if(profile.imageFilepath != ""){
+        if (profile.imageFilepath != "") {
             fetchImageUrl(profile.imageFilepath);
-        } 
-    }, [profile, location.pathname]);   
+        }
+    }, [profile, location.pathname]);
 
     function editProfile() {
         setProfileEdit(true);
     }
     function close(e) {
-        if(e.target.className == "transparent-background") {
+        if (e.target.className == "transparent-background") {
             setProfileEdit(false);
         }
     }
     return (
         <div className="profile">
-             {profileEdit ? 
-                <EditProfilePopup currentImageUrl={imageUrl} editProfile={editProfile} close={close}/> : <></>}
+            {profileEdit ?
+                <EditProfilePopup currentImageUrl={imageUrl} editProfile={editProfile} close={close} /> : <></>}
             <div className="profile-photo-wrapper">
                 {imageUrl ?
                     <img className="profile-photo" src={imageUrl}></img> :
@@ -71,26 +72,29 @@ function Profile({user, viewer, profileStats, followStatus, followHandler}) {
                     <div className="profile-username">{user}</div>
                     {viewer == user ?
                         <div className="account-owner-buttons">
-                            <button className="profile-button" onClick={editProfile}>Edit Profile</button> 
+                            <button className="profile-button" onClick={editProfile}>Edit Profile</button>
                             <div className="settings-button-wrapper">
                                 <img className="settings-button" src={settings}></img>
                             </div>
                         </div>
                         :
-                        <button className="profile-button" onClick={followHandler}><b>{followStatus}</b></button> 
+                        <button className="profile-button" onClick={followHandler}><b>{followStatus}</b></button>
                     }
                 </div>
                 <div className="profile-stats">
                     <span className="profile-stats-field">Posts <b className="white"> {profileStats.posts}</b></span>
-                    <span className="profile-stats-field" onClick={() => navigate("/"+user+"/followers")}>
+                    <span className="profile-stats-field" onClick={() => navigate("/" + user + "/followers")}>
                         Followers <b className="white" > {profileStats.followers}</b></span>
-                    <span className="profile-stats-field" onClick={() => navigate("/"+user+"/following")}>
+                    <span className="profile-stats-field" onClick={() => navigate("/" + user + "/following")}>
                         Following <b className="white"> {profileStats.following}</b></span>
                 </div>
                 <b>{profile.name}</b>
                 <div className="profile-content">
                     <div>{profile.description}</div>
                 </div>
+            </div>
+            <div className="refresh-wrapper" onClick={() => setUpdate(x => x + 1)}>
+                <img className="refresh-image" src={refresh}></img>
             </div>
         </div>
     )
