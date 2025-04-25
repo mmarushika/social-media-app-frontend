@@ -1,4 +1,6 @@
 import "./MessageBar.css";
+
+import sendIcon from "src/assets/send.png";
 import { useState } from 'react';
 
 function MessageBar({ onClick }) {
@@ -11,12 +13,12 @@ function MessageBar({ onClick }) {
             <div className="message-bar">
                 <textarea placeholder="Send a message" value={currentText} className="message-field" onChange={updateCurrentText}></textarea> 
                 <div className="send-button-wrapper">
-                <button className="send-button" onClick={() => {
+                <img className="send-button" src={sendIcon} onClick={() => {
                     if (currentText !== "") {
                         onClick(currentText);
                         setCurrentText("");
                     }
-                }}></button>
+                }}></img>
                 </div>
             </div>
         </div>

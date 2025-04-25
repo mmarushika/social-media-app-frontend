@@ -5,26 +5,27 @@ import { useNavigate } from "react-router";
 import { getData, addData } from "../../../services/PostServices";
 import add from "../../../assets/add-white.png";
 import DMContact from "../DMContact/DMContact";
+import User from "../../../components/User/User";
 
 
 function DMList({ sender, selectDMContact }) {
     const navigate = useNavigate();
-    const [dmList, setDMList] = useState([]);
+    const [contacts, setContacts] = useState([]);
 
-    function fetchDMList() {
+    function fetchContacts() {
         console.log("fetch");
-        getData(`http://localhost:8000/dm-list?sender=${sender}`)
+        getData(`http://localhost:8000/messages/contacts?sender=${sender}`)
             .then(data => {
                 data.forEach(i => console.log(i));
-                setDMList(data)
+                setContacts(data)
             });
     }
-    useEffect(fetchDMList, []);
+    useEffect(fetchContacts, []);
 
     return (
         <div className="dm-list">
             <div className="current-user-dm-list-wrapper">
-                <DMContact contact={sender} selectDMContact={() =>{}} />
+                <User currentUser={sender} username={sender} mode="explore" />
                 <div className="add-contact-wrapper" onClick={() => navigate("/inbox/contacts")}>
                     <img className="add-contact-image" src={add}></img>
                 </div>
@@ -32,7 +33,7 @@ function DMList({ sender, selectDMContact }) {
             <div className="messages-header">
                 <div>Messages</div>
             </div>
-            {dmList.map(i => <DMContact contact={i} onClick={selectDMContact} />)}
+            {contacts.map(i => <DMContact contact={i} onClick={selectDMContact} />)}
         </div>
     );
 }

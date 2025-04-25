@@ -1,25 +1,26 @@
 .dm-list {
-    min-width: 350px;
+    min-width: 330px;
     overflow-y: scroll;
     height: 100vh;
     border-right: solid gray;
     border-width: 0.5px;
+    padding-left: 20px;
 }
 
 .current-user-dm-list-wrapper {
     display: flex;
     align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 .messages-header {
     font-weight: bold;
     color: gray;
     height: 30px;
     width: 150px;
-    margin-left: 30px;
 }
 
 .add-contact-wrapper {
-    margin-left: 50px;
     height: 25px;
     width: 25px;
 }

@@ -65,10 +65,15 @@ function App() {
             view={<Home user={user.username} />} />}></Route>
         <Route path={"/inbox"}
           element={<PrivateRoute isAuthenticated={user.isAuthenticated} 
-            view={<DirectMessage sender={user.username} updateContacts={false}/>} />}></Route>
+            view={<DirectMessage sender={user.username} receiver="" updateContacts={false}/>} />}></Route>
         <Route path={"/inbox/contacts"}
           element={<PrivateRoute isAuthenticated={user.isAuthenticated} 
-            view={<DirectMessage sender={user.username} updateContacts={true}/>} />}></Route>
+            view={<DirectMessage sender={user.username} reciever="" updateContacts={true}/>} />}></Route>
+        {users.map(username => 
+        <Route path={"/inbox/" + username}
+          element={<PrivateRoute isAuthenticated={user.isAuthenticated} 
+            view={<DirectMessage sender={user.username} receiver={username} updateContacts={false}/>} />}></Route>
+        )}
         <Route path={"/profile/new"}
           element={<PrivateRoute isAuthenticated={user.isAuthenticated} 
             view={<ProfileHome user={user.username} viewer={user.username} createPost={false} setProfile={true} 

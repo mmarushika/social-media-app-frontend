@@ -3,5 +3,11 @@
     display: flex;
     align-items: center;
     padding-left: 20px;
+    width: 300px;
 }
 
+.dm-contact-info-wrapper {
+    display: flex;
+    align-items: center;
+    width: 80%;
+}

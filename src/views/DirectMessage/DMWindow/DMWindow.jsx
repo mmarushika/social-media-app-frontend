@@ -12,6 +12,7 @@ function DMWindow({ sender, receiver }) {
   const [messages, setMessages] = useState([]);
   const [updateStatus, setUpdateStatus] = useState(false);
 
+  console.log(receiver);
   function fetchMessages() {
     console.log("fetch");
     getMessageHistory(sender, receiver)
@@ -26,7 +27,7 @@ function DMWindow({ sender, receiver }) {
       sender: sender,
       receiver: receiver,
       content: content,
-      timestamp: JSON.stringify(new Date),
+      timestamp: JSON.stringify(new Date()),
     }
     console.log(message);
     addMessage(message)

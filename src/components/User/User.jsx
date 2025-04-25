@@ -27,7 +27,12 @@ function User({currentUser, username, mode, acceptRequest, cancelRequest}) {
     useEffect(() => {
         function fetchProfile() {
             getData(`http://localhost:8000/profile?username=${username}`)
-                .then(data => setProfile(data))
+                .then(data => {
+                    if(data != null) {
+                        setProfile(data);
+                    }
+                } 
+            )
         }
         fetchProfile();
     }, [location.pathname]);
