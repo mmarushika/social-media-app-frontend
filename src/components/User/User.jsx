@@ -53,7 +53,7 @@ function User({currentUser, username, mode, acceptRequest, cancelRequest}) {
     }, [profile, location.pathname]);   
 
     return (
-            <div className={mode+"-user-button"} onClick={() => navigate(location)}>
+            <div className={mode+"-user-button"} onClick={() => {if(mode!="static") navigate(location)}}>
                 <div className={"user-button-profile-wrapper"}>
                     {imageUrl ?
                         <img className="profile-photo" src={imageUrl}></img> :

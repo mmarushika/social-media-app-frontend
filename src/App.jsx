@@ -54,9 +54,12 @@ function App() {
         .then(navigate("/profile/new"));
   }
 
+  function logout() {
+    setUser({ isAuthenticated: false, username: null })
+  }
   return (
     <div>
-      {user.isAuthenticated ? <NavBar user={user.username}/> : <></>}
+      {user.isAuthenticated ? <NavBar user={user.username} logout={logout}/> : <></>}
       <Routes>
         <Route path="/login" element={user.isAuthenticated ? <Navigate to={"/home"} /> :<Login authenticate={authenticate}/>} />
         <Route path="/signup" element={<Signup signup={signup}/>} />

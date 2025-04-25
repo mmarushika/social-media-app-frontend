@@ -1,6 +1,6 @@
 import "./MessageBar.css";
 
-import sendIcon from "src/assets/send.png";
+import sendIcon from "../../../../assets/send.png";
 import { useState } from 'react';
 
 function MessageBar({ onClick }) {

@@ -1,4 +1,4 @@
-.explore-user-button {
+.explore-user-button, .static-user-button {
     width: 250px;
     height: 70px;
     display: flex;

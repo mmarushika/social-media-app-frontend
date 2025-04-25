@@ -25,7 +25,7 @@ function DMList({ sender, selectDMContact }) {
     return (
         <div className="dm-list">
             <div className="current-user-dm-list-wrapper">
-                <User currentUser={sender} username={sender} mode="explore" />
+                <User currentUser={sender} username={sender} mode="static" />
                 <div className="add-contact-wrapper" onClick={() => navigate("/inbox/contacts")}>
                     <img className="add-contact-image" src={add}></img>
                 </div>
@@ -33,7 +33,7 @@ function DMList({ sender, selectDMContact }) {
             <div className="messages-header">
                 <div>Messages</div>
             </div>
-            {contacts.map(i => <DMContact contact={i} onClick={selectDMContact} />)}
+            {contacts.map(i => <DMContact contact={i} onClick={() => navigate("/inbox/"+i)} />)}
         </div>
     );
 }

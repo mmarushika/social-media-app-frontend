@@ -7,8 +7,9 @@ import home from "../../assets/home-white.png";
 import profile from "../../assets/profile-white.png";
 import create from "../../assets/create-white.png";
 import message from "../../assets/white-message.png";
+import logout from "../../assets/logout.png";
 
-function NavBar({user}) {
+function NavBar({user, logout}) {
     const [currentUser, setCurrentUser] = useState(user);
     return (
         <div className="nav-bar">
@@ -17,6 +18,7 @@ function NavBar({user}) {
                 <Link to="/home"><img className="nav-icon" src={home}></img></Link>
                 <Link to="/inbox"><img className="nav-icon" src={message}></img></Link>
                 <Link to={"/" + user + "/create"}><img className="nav-icon" src={create}></img></Link>
+                <img className="nav-icon" src={logout}></img>
             </div>
         </div>
     );

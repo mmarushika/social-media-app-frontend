@@ -5,22 +5,27 @@ import DMHeader from "./DMHeader/DMHeader";
 import DMHistory from "./DMHistory/DMHistory";
 import MessageBar from "./MessageBar/MessageBar";
 
+import { useLocation } from "react-router";
 import { useState, useEffect } from 'react';
-import { addMessage, getMessageHistory } from '../../../services/DMServices';
+import { addData, getData } from '../../../services/PostServices';
 
 function DMWindow({ sender, receiver }) {
+  const location = useLocation();
   const [messages, setMessages] = useState([]);
-  const [updateStatus, setUpdateStatus] = useState(false);
+  const [update, setUpdate] = useState(0);
 
-  console.log(receiver);
+  setInterval(() => {
+    //setUpdate(x => x + 1)
+  }, 1000);
+
   function fetchMessages() {
     console.log("fetch");
-    getMessageHistory(sender, receiver)
+    getData(`http://localhost:8000/messages?sender=${sender}&receiver=${receiver}`)
       .then(data => {
         setMessages(data)
       });
   }
-  useEffect(fetchMessages, [receiver]);
+  useEffect(fetchMessages, [update, location.pathname]);
 
   async function send(content) {
     const message = {
@@ -30,8 +35,9 @@ function DMWindow({ sender, receiver }) {
       timestamp: JSON.stringify(new Date()),
     }
     console.log(message);
-    addMessage(message)
-      .then(fetchMessages());
+    console.log(sender, receiver)
+    addData(`http://localhost:8000/messages/send?sender=${sender}&receiver=${receiver}`, message)
+      .then(setUpdate(x => x + 1));
   }
   return (
     <div className="dm-window">
