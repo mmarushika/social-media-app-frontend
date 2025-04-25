@@ -16,7 +16,7 @@ function ContactsPopup({user, messageContact}) {
     }
     useEffect(() => {
         async function fetchFollowing() {
-            const data = await getData(`http://localhost:8000/following?username=${user}`);
+            const data = await getData(`http://localhost:8000/followers/mutual?username=${user}`);
             console.log(data);
             if(data != null) {
                 setUsers([...data]);

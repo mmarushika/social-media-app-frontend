@@ -8,7 +8,7 @@ import DMContact from "../DMContact/DMContact";
 import User from "../../../components/User/User";
 
 
-function DMList({ sender, selectDMContact }) {
+function DMList({ sender }) {
     const navigate = useNavigate();
     const [contacts, setContacts] = useState([]);
 

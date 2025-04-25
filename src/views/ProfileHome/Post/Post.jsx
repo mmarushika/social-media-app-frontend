@@ -1,9 +1,11 @@
 import "./Post.css";
 import {useEffect, useState} from "react";
 
+import { useNavigate } from "react-router";
 import { getImageUrl } from "../../../services/PostServices";
 
-function Post({post, onClick}) {
+function Post({post}) {
+    const navigate = useNavigate();
     const [imageUrl, setImageUrl] = useState(null);
     function fetchImageUrl() {
         getImageUrl(post.imageFilepath).then(url => {
@@ -12,8 +14,9 @@ function Post({post, onClick}) {
         });
     }
     useEffect(fetchImageUrl, []);
+
     return (
-        <div onClick={() => onClick(post)} className="unclicked-post">
+        <div onClick={() => navigate("/"+post.creator+"/"+post._id)} className="unclicked-post">
             <div className="image-wrapper">
                 <img className="unclicked-post-image" src = {imageUrl}></img>
             </div>

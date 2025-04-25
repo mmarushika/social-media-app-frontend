@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import { getImageUrl, getData, updateData, addData } from "../../../services/PostServices";
 import EditProfilePopup from "../EditProfilePopup/EditProfilePopup.jsx";
 
-function Profile({ user, viewer, profileStats, followStatus, followHandler, setUpdate}) {
+function Profile({ user, viewer, profileStats, followStatus, followHandler, setUpdate, mutualFollower}) {
     console.log(user, viewer);
     console.log(profileStats);
     const navigate = useNavigate();
@@ -78,7 +78,12 @@ function Profile({ user, viewer, profileStats, followStatus, followHandler, setU
                             </div>
                         </div>
                         :
-                        <button className="profile-button" onClick={followHandler}><b>{followStatus}</b></button>
+                        <>
+                            <button className="profile-button" onClick={followHandler}><b>{followStatus}</b></button>
+                            {mutualFollower ? 
+                            <button className="profile-button" onClick={() => navigate("/inbox/"+user)}>Message</button> : <></>
+                        }
+                        </>
                     }
                 </div>
                 <div className="profile-stats">
@@ -93,10 +98,16 @@ function Profile({ user, viewer, profileStats, followStatus, followHandler, setU
                     <div>{profile.description}</div>
                 </div>
             </div>
-            <div className="refresh-wrapper" onClick={() => setUpdate(x => x + 1)}>
-                <img className="refresh-image" src={refresh}></img>
-            </div>
+            
         </div>
     )
 }
 export default Profile;
+
+/*
+
+<div className="refresh-wrapper" onClick={() => setUpdate(x => x + 1)}>
+    <img className="refresh-image" src={refresh}></img>
+</div>
+
+ */

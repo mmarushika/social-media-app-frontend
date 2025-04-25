@@ -18,7 +18,7 @@ function NavBar({user, logout}) {
                 <Link to="/home"><img className="nav-icon" src={home}></img></Link>
                 <Link to="/inbox"><img className="nav-icon" src={message}></img></Link>
                 <Link to={"/" + user + "/create"}><img className="nav-icon" src={create}></img></Link>
-                <img className="nav-icon" src={logout}></img>
+                <img className="nav-icon" src="src/assets/logout.png" onClick={logout}></img>
             </div>
         </div>
     );

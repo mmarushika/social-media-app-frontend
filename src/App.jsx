@@ -20,6 +20,8 @@ const PrivateRoute = ({ isAuthenticated, view }) => {
 function App() {
   const [user, setUser] = useState({ isAuthenticated: false, username: null });
   const [users, setUsers] = useState([]);
+  const [posts, setPosts] = useState([]);
+
   const navigate = useNavigate();
   const location = useLocation();
   useEffect(() => {
@@ -28,7 +30,14 @@ function App() {
       console.log(data);
       setUsers([...data.filter((i) => i != user)]);
     }
+    async function fetchPosts() {
+      const data = await getData(`http://localhost:8000/posts/all`)
+      if(data != null) {
+          setPosts([...data.reverse()]);
+      }
+  }
     fetchUsers();
+    fetchPosts();
   }, [user, location.pathname]);
     
   function authenticate(username, password) {
@@ -66,6 +75,11 @@ function App() {
         <Route path="/home"
           element={<PrivateRoute isAuthenticated={user.isAuthenticated} 
             view={<Home user={user.username} />} />}></Route>
+        {posts.map(post => 
+        <Route path={"/home/"+post._id}
+          element={<PrivateRoute isAuthenticated={user.isAuthenticated} 
+            view={<Home user={user.username} clickedPost={post}/>} />}></Route>
+        )}
         <Route path={"/inbox"}
           element={<PrivateRoute isAuthenticated={user.isAuthenticated} 
             view={<DirectMessage sender={user.username} receiver="" updateContacts={false}/>} />}></Route>
@@ -80,36 +94,42 @@ function App() {
         <Route path={"/profile/new"}
           element={<PrivateRoute isAuthenticated={user.isAuthenticated} 
             view={<ProfileHome user={user.username} viewer={user.username} createPost={false} setProfile={true} 
-              viewFollwers={false} viewFollowing={false}/>} />}></Route>
+              viewFollwers={false} viewFollowing={false} clickedPost={null}/>} />}></Route>
         {users.map(username => 
         <Route path={"/" + username}
           element={<PrivateRoute isAuthenticated={user.isAuthenticated} 
             view={<ProfileHome user={username} viewer={user.username} createPost={false} setProfile={false}
-              viewFollwers={false} viewFollowing={false}/>} />}></Route>
+              viewFollwers={false} viewFollowing={false} clickedPost={null}/>} />}></Route>
         )}
         {users.map(username => 
         <Route path={"/" + username + "/create"}
           element={<PrivateRoute isAuthenticated={user.isAuthenticated} 
             view={<ProfileHome user={user.username} viewer={user.username} createPost={true} setProfile={false} 
-              viewFollwers={false} viewFollowing={false}/>} />}></Route>
+              viewFollwers={false} viewFollowing={false} clickedPost={null}/> } />}></Route>
         )}
         {users.map(username => 
         <Route path={"/" + username + "/view"}
           element={<PrivateRoute isAuthenticated={user.isAuthenticated} 
             view={<ProfileHome user={username} viewer={user.username} createPost={false} setProfile={false}
-              viewFollwers={false} viewFollowing={false}/>} />}></Route>
+              viewFollwers={false} viewFollowing={false} clickedPost={null}/>} />}></Route>
         )}
         {users.map(username => 
         <Route path={"/" + username + "/followers"}
           element={<PrivateRoute isAuthenticated={user.isAuthenticated} 
             view={<ProfileHome user={username} viewer={user.username} createPost={false} setProfile={false} 
-              viewFollowers={true} viewFollowing={false}/>} />}></Route>
+              viewFollowers={true} viewFollowing={false} clickedPost={null}/>} />}></Route>
         )}
         {users.map(username => 
         <Route path={"/" + username + "/following"}
           element={<PrivateRoute isAuthenticated={user.isAuthenticated} 
             view={<ProfileHome user={username} viewer={user.username} createPost={false} setProfile={false} 
-              viewFollowers={false} viewFollowing={true}/>} />}></Route>
+              viewFollowers={false} viewFollowing={true} clickedPost={null}/>} />}></Route>
+        )}
+        {posts.map(post => 
+        <Route path={"/"+post.creator+"/"+post._id}
+          element={<PrivateRoute isAuthenticated={user.isAuthenticated} 
+            view={<ProfileHome user={post.creator} viewer={user.username} createPost={false} setProfile={false} 
+              viewFollowers={false} viewFollowing={false} clickedPost={post}/>} />}></Route>
         )}
         </Routes>
     </div>

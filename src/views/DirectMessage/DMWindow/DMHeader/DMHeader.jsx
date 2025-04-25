@@ -1,9 +1,11 @@
 import "./DMHeader.css";
 
-function DMHeader(prop) {
+import User from "../../../../components/User/User";
+
+function DMHeader({name}) {
     return (
         <div className="dm-header">
-            <h1>{prop.name}</h1>
+            <User currentUser={name} username={name} mode="static" />
         </div>
     );
 }

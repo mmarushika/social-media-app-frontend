@@ -1,9 +1,10 @@
 import "./OpenedPost.css";
 
-import {useState, useEffect} from "react";
+import { useNavigate } from 'react-router';
+import { useState, useEffect } from "react";
 import { getImageUrl } from "../../../services/PostServices";
 
-function OpenedPost({ post, onClick }) {
+function OpenedPost({ post, close }) {
     console.log(post);
     const [imageUrl, setImageUrl] = useState(null);
     function fetchImageUrl() {
@@ -13,8 +14,9 @@ function OpenedPost({ post, onClick }) {
         });
     }
     useEffect(fetchImageUrl, []);
+
     return (
-        <div className="transparent-background" onClick={onClick}>
+        <div className="transparent-background" onClick={close}>
             <div className="opened-post">
                 <div className="opened-post-image-wrapper">
                     <img className="opened-post-image" src={imageUrl}></img>

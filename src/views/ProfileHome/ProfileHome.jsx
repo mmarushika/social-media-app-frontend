@@ -1,6 +1,6 @@
 import "./ProfileHome.css";
 
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import {getData, addData, updateData} from "../../services/PostServices";
 import {useState, useEffect} from "react";
 import PostHistory from "./PostHistory/PostHistory";
@@ -11,11 +11,13 @@ import Profile from "./Profile/Profile";
 import PrivateAccount from "./PrivateAccount/PrivateAccount";
 import FollowPopup from "./FollowPopup/FollowPopup";
 
-function ProfileHome({user, viewer, createPost, setProfile, viewFollowers, viewFollowing}) {
+function ProfileHome({user, viewer, createPost, setProfile, viewFollowers, viewFollowing, clickedPost}) {
+    const navigate = useNavigate();
     const [posts, setPosts] = useState([]);
     const [followers, setFollowers] = useState([]);
     const [following, setFollowing] = useState([]);
-    const [clickedPost, setClickedPost] = useState(null);
+    const [mutualFollower, setMutualFollowers] = useState([]);
+    //const [clickedPost, setClickedPost] = useState(null);
     const [update, setUpdate] = useState(0);
     const [profileSettings, setProfileSettings] = useState({accountPrivacy: ""});
     const [profileStats, setProfileStats] = useState({posts: 0, following: 0, followers: 0});
@@ -101,20 +103,16 @@ function ProfileHome({user, viewer, createPost, setProfile, viewFollowers, viewF
         return followers.find((i) => (i == viewer)) != undefined;
     }
 
-    function clickBackground(event) {
-        if(event.target.className == "transparent-background") {
-            setClickedPost(false);
-        }
-    }
-
-    function clickPost(post) {
-        if(clickedPost === null) {
-            setClickedPost(post);
+    function close() {
+        if(viewer === user) {
+            navigate("/"+user);
         } else {
-            setClickedPost(null);
+            navigate("/"+user+"/view");
         }
     }
-    //console.log(profileSettings, user, viewer);
+    function checkMutualFollower(viewer) {
+        return followers.filter(i => following.includes(i));
+    }
     return (
         <div className="view profile-home">
             {setProfile ? 
@@ -122,9 +120,10 @@ function ProfileHome({user, viewer, createPost, setProfile, viewFollowers, viewF
                 : 
                 <>
                     <Profile user={user} viewer={viewer} followStatus={followStatus} 
-                        followHandler={getFollowHandler()} profileStats={profileStats} setUpdate={setUpdate}/>
+                        followHandler={getFollowHandler()} profileStats={profileStats} setUpdate={setUpdate} 
+                        mutualFollower={checkMutualFollower(viewer)}/>
                     {(profileSettings.accountPrivacy != "Private" || user == viewer || isFollower()) ?
-                        <PostHistory posts={posts} clickPost={clickPost}/>
+                        <PostHistory posts={posts}/>
                     : <PrivateAccount/>}
                 </>
 
@@ -132,7 +131,7 @@ function ProfileHome({user, viewer, createPost, setProfile, viewFollowers, viewF
             {createPost ? 
                 <CreatePostPopup user ={user} setUpdate={setUpdate}/> : <></>
             }  
-            {clickedPost ? <OpenedPost post={clickedPost} onClick={clickBackground}/> : <></> }
+            {clickedPost ? <OpenedPost post={clickedPost} close={close}/> : <></> }
             {viewFollowers ?
                 <FollowPopup user={user} mode="Followers" list={followers}/> : <></>
             }

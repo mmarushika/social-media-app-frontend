@@ -3,9 +3,9 @@ import Post from "../Post/Post";
 
 import {useEffect, useRef} from "react";
 
-function PostHistory({posts, clickPost}) {
+function PostHistory({ posts}) {
     const postList = useRef(null);
-
+    
     useEffect(() => {   
         // scrolls to the most recent message   
         console.log(postList.current?.firstElementChild);
@@ -14,7 +14,7 @@ function PostHistory({posts, clickPost}) {
 
     return (
         <div className="post-history" ref={postList} >
-            {posts.map(i => <Post key={i._id} post={i} onClick={clickPost} />)}
+            {posts ? posts.map(i => <Post key={i._id} post={i} />) : <></>}
         </div>
     )
 }
